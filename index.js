@@ -2,7 +2,7 @@ export function configureBot() {
   console.log("Unity bot configureBot function called!")
 }
 
-export async function runTurn(tickInfo, mostRecentMatchInfo, api) {
+export async function runTurn(tickInfo, mostRecentMatchInfo, actionQueue) {
 
   let allObjects = Object.values(tickInfo)
   let humanPlayer = allObjects.find(o => o.type === "HumanPlayer")
@@ -19,7 +19,7 @@ export async function runTurn(tickInfo, mostRecentMatchInfo, api) {
     console.log(`Distance is ${distance}, and range is ${desiredRange}`);
     if (distance > desiredRange) {
       console.log("Sending action");
-      api.sendAction("FollowObject", {targetId: humanPlayer.id, range: 5})
+      actionQueue.queue("FollowObject", {targetId: humanPlayer.id, range: 5})
     }
   }
 
