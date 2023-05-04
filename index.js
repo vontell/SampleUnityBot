@@ -17,7 +17,14 @@ const BossRoomBot = {
   },
 
   startAbility: (ability, position, targetId, actionQueue) => {
-
+    const input = {
+      skillId: ability,
+      targetId: targetId,
+      xPosition: position.x,
+      yPosition: position.y,
+      zPosition: position.z
+    }
+    actionQueue.queue("PerformSkill", input)
   }
 
 }
