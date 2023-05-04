@@ -3,7 +3,7 @@
 const RGBot = {
 
   getEntitiesOnTeam: (tickInfo, team) => {
-    return tickInfo.gameState.filter(bot => bot.team === team);
+    return Object.values(tickInfo.gameState).filter(bot => bot.team === team);
   }
 
 }
