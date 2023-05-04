@@ -34,7 +34,7 @@ class RGValidator {
 }
 
 export function configureBot() {
-  console.log("Unity bot configureBot function called!")
+  console.log("Unity bot configureBot function called !")
 }
 
 
