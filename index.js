@@ -1,5 +1,5 @@
 
-
+ 
 const RGBot = {
 
   getEntitiesOnTeam: (tickInfo, team) => {
