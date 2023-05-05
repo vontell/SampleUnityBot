@@ -44,7 +44,7 @@ class RGValidator {
 
 }
 
-let charType = Math.random() * 100 % 4;
+let charType = (Math.random() * 1000000) % 4;
 
 export function configureBot() {
   console.log(`Unity bot configureBot function called, charType: ${charType} !`)
