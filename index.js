@@ -6,7 +6,7 @@ const RGBot = {
     return Object.values(tickInfo.gameState).filter(bot => bot.team === team);
   }
 
-}
+} 
 
 const BossRoomBot = {
 
