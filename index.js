@@ -42,7 +42,7 @@ let CURRENT_ABILITY = 0;
 
 export async function runTurn(tickInfo, mostRecentMatchInfo, actionQueue) {
 
-  console.log(tickInfo)
+  console.log(`Running 'runTurn' with new tickInfo`)
 
   // Collect some initial information that is needed
   const enemies = BossRoomBot.getEnemies(tickInfo);
