@@ -58,8 +58,10 @@ export async function runTurn(tickInfo, mostRecentMatchInfo, actionQueue) {
   console.log(`Running 'runTurn' with new tickInfo`)
 
   // Some abilities require an enemy/ally id and position
-  const abilityIndex = CURRENT_ABILITY % CharInfo.abilities[charType].length;
-  const ability = CharInfo.abilities[charType][abilityIndex];
+  const abilities = CharInfo.abilities[charType];
+  console.log(`Considering abilities JSON.stringify(abilities)`);
+  const abilityIndex = CURRENT_ABILITY % abilities.length;
+  const ability = abilities[abilityIndex];
   console.log(`Trying out ability ${ability}`);
   if (CharInfo.abilityTargets[charType][abilityIndex] == 1) {
       const enemies = BossRoomBot.getEnemies(tickInfo);
