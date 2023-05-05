@@ -55,7 +55,7 @@ export async function runTurn(tickInfo, mostRecentMatchInfo, actionQueue) {
   BossRoomBot.startAbility(ability, randomEnemy.position, randomEnemy.id, actionQueue);
   CURRENT_ABILITY++;
 
-}
+} 
 
 export function getCharacterType() {
   return "Mage";
