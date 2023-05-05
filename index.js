@@ -8,10 +8,16 @@ const RGBot = {
 
 }
 
-const BossRoomBot = {
+const CharInfo = {
+  
+  type: ["Mage", "Rogue", "Tank", "Archer"],
+  abilities: [[0,1], [0,1,2], [0,1], [0,1,2]],
+  // teamId
+  abilityTargets: [[1,0], [1,1,0], [1,0], [1,1,1]]
 
-  // mage only has 2 abilities, other characterTypes may have more
-  abilities: [0, 1],
+}
+
+const BossRoomBot = {
 
   getEnemies: (tickInfo) => {
     return RGBot.getEntitiesOnTeam(tickInfo, 1);
@@ -38,8 +44,10 @@ class RGValidator {
 
 }
 
+let charType = Math.random() * 100 % 4;
+
 export function configureBot() {
-  console.log("Unity bot configureBot function called !")
+  console.log(`Unity bot configureBot function called, charType: ${charType} !`)
 }
 
 
@@ -50,9 +58,10 @@ export async function runTurn(tickInfo, mostRecentMatchInfo, actionQueue) {
   console.log(`Running 'runTurn' with new tickInfo`)
 
   // Some abilities require an enemy/ally id and position
-  const ability = BossRoomBot.abilities[CURRENT_ABILITY % BossRoomBot.abilities.length];
+  const abilityIndex = CURRENT_ABILITY % CharInfo.abilities[charType].length;
+  const ability = CharInfo.abilities[charType][abilityIndex];
   console.log(`Trying out ability ${ability}`);
-  if (CURRENT_ABILITY % BossRoomBot.abilities.length == 0) {
+  if (CharInfo.abilityTargets[charType][abilityIndex] == 1) {
       const enemies = BossRoomBot.getEnemies(tickInfo);
       console.log(`Found ${enemies.length} enemies!`);
       const randomEnemy = enemies[Math.floor(Math.random() * enemies.length)];
@@ -68,5 +77,5 @@ export async function runTurn(tickInfo, mostRecentMatchInfo, actionQueue) {
 } 
 
 export function getCharacterType() {
-  return "Mage";
+  return CharInfo.type[charType];
 }
