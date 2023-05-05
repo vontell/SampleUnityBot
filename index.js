@@ -59,7 +59,7 @@ export async function runTurn(tickInfo, mostRecentMatchInfo, actionQueue) {
 
   // Some abilities require an enemy/ally id and position
   const abilities = CharInfo.abilities[charType];
-  console.log(`Considering abilities JSON.stringify(abilities)`);
+  console.log(`Considering abilities ${JSON.stringify(abilities)}`);
   const abilityIndex = CURRENT_ABILITY % abilities.length;
   const ability = abilities[abilityIndex];
   console.log(`Trying out ability ${ability}`);
