@@ -56,3 +56,7 @@ export async function runTurn(tickInfo, mostRecentMatchInfo, actionQueue) {
   CURRENT_ABILITY++;
 
 }
+
+export function getCharacterType() {
+  return "Mage";
+}
