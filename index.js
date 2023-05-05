@@ -19,7 +19,7 @@ const BossRoomBot = {
   
   getAllies: (tickInfo) => {
     return RGBot.getEntitiesOnTeam(tickInfo, 0);
-  }
+  },
 
   startAbility: (ability, position, targetId, actionQueue) => {
     const input = {
