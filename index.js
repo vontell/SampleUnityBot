@@ -52,7 +52,7 @@ export async function runTurn(tickInfo, mostRecentMatchInfo, actionQueue) {
   // Some abilities require an enemy/ally id and position
   const ability = BossRoomBot.abilities[CURRENT_ABILITY % BossRoomBot.abilities.length];
   console.log(`Trying out ability ${ability}`);
-  if (ability % BossRoomBot.abilities.length == 0) {
+  if (CURRENT_ABILITY % BossRoomBot.abilities.length == 0) {
       const enemies = BossRoomBot.getEnemies(tickInfo);
       console.log(`Found ${enemies.length} enemies!`);
       const randomEnemy = enemies[Math.floor(Math.random() * enemies.length)];
