@@ -116,7 +116,7 @@ function selectAbility(playerId, tickInfo, mostRecentMatchInfo, actionQueue) {
     } else {
       randomAlly = allies[Math.floor(Math.random() * allies.length)];
     }
-    BossRoomBot.startAbility(ability, randomAlly ? randomAlly.position : null, randomAlly, actionQueue);
+    BossRoomBot.startAbility(ability, randomAlly ? randomAlly.position : null, randomAlly ? randomAlly.id : null, actionQueue);
   }
   CURRENT_ABILITY++;
 }
