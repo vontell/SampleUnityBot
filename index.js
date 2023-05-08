@@ -78,8 +78,7 @@ export async function runTurn(playerId, tickInfo, mostRecentMatchInfo, actionQue
 
   //console.log(`Running 'runTurn' with playerId: ${playerId}, tickInfo: ${JSON.stringify(tickInfo)}`)
 
-  // select 2 abilities per tick
-  selectAbility(playerId, tickInfo, mostRecentMatchInfo, actionQueue);
+  // select 1 ability per tick
   selectAbility(playerId, tickInfo, mostRecentMatchInfo, actionQueue);
 }
 
