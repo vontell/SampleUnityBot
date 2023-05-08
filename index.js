@@ -36,7 +36,7 @@ const BossRoomBot = {
   },
 
   nearestEnemy: (tickInfo, position) => {
-    return RGBot.getEntitiesOnTeam(tickInfo, 1).toSorted((a,b) => MathFunctions.distanceSq(position, a.position) - MathFunctions.distanceSq(position, b.position));
+    return RGBot.getEntitiesOnTeam(tickInfo, 1).sort((a,b) => MathFunctions.distanceSq(position, a.position) - MathFunctions.distanceSq(position, b.position)).find(() => true);
   },
 
   startAbility: (ability, position, targetId, actionQueue) => {
