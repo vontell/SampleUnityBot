@@ -27,6 +27,10 @@ const BossRoomBot = {
     return RGBot.getEntitiesOnTeam(tickInfo, 0);
   },
 
+  getEnemy: (tickInfo, id) => {
+    return RGBot.getEntitiesOnTeam(tickInfo, 1).find(entry => entry.id == id);
+  },
+
   startAbility: (ability, position, targetId, actionQueue) => {
     const input = {
       skillId: ability,
@@ -54,6 +58,8 @@ export function configureBot(characterType) {
 
 let CURRENT_ABILITY = 0;
 
+let lastEnemyId = -1;
+
 export async function runTurn(tickInfo, mostRecentMatchInfo, actionQueue) {
 
   console.log(`Running 'runTurn' with new tickInfo`)
@@ -67,8 +73,16 @@ export async function runTurn(tickInfo, mostRecentMatchInfo, actionQueue) {
   if (CharInfo.abilityTargets[charType][abilityIndex] == 1) {
       const enemies = BossRoomBot.getEnemies(tickInfo);
       console.log(`Found ${enemies.length} enemies!`);
-      const randomEnemy = enemies[Math.floor(Math.random() * enemies.length)];
-      BossRoomBot.startAbility(ability, randomEnemy.position, randomEnemy.id, actionQueue);
+      let randomEnemy = BossRoomBot.getEnemy(tickInfo, lastEnemyId);
+      if (!randomEnemy) {
+        randomEnemy = enemies[Math.floor(Math.random() * enemies.length)];
+      }
+      if (randomEnemy) {
+        lastEnemyId = randomEnemy.id;
+        BossRoomBot.startAbility(ability, randomEnemy.position, randomEnemy.id, actionQueue);
+      } else {
+        lastEnemyId = -1;
+      }
   } else {
       const allies = BossRoomBot.getAllies(tickInfo);
       console.log(`Found ${allies.length} allies!`);
