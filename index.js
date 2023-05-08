@@ -20,7 +20,7 @@ const CharInfo = {
 const BossRoomBot = {
 
   getEnemies: (tickInfo) => {
-    return RGBot.getEntitiesOnTeam(tickInfo, 1);
+    return RGBot.getEntitiesOnTeam(tickInfo, 1).filter(entry => !entry.broken);
   },
   
   getAllies: (tickInfo) => {
@@ -36,7 +36,7 @@ const BossRoomBot = {
   },
 
   nearestEnemy: (tickInfo, position) => {
-    return RGBot.getEntitiesOnTeam(tickInfo, 1).sort((a,b) => MathFunctions.distanceSq(position, a.position) - MathFunctions.distanceSq(position, b.position)).find(() => true);
+    return RGBot.getEntitiesOnTeam(tickInfo, 1).filter(entry => !entry.broken).sort((a,b) => MathFunctions.distanceSq(position, a.position) - MathFunctions.distanceSq(position, b.position)).find(() => true);
   },
 
   startAbility: (ability, position, targetId, actionQueue) => {
