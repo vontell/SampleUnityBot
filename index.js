@@ -31,6 +31,14 @@ const BossRoomBot = {
     return RGBot.getEntitiesOnTeam(tickInfo, 1).find(entry => entry.id == id);
   },
 
+  getAlly: (tickInfo, id) => {
+    return RGBot.getEntitiesOnTeam(tickInfo, 0).find(entry => entry.id == id);
+  },
+
+  nearestEnemy: (tickInfo, position) => {
+    return RGBot.getEntitiesOnTeam(tickInfo, 1).toSorted((a,b) => MathFunctions.distanceSq(position, a.position) - MathFunctions.distanceSq(position, b.position));
+  }
+
   startAbility: (ability, position, targetId, actionQueue) => {
     const input = {
       skillId: ability,
@@ -48,6 +56,12 @@ class RGValidator {
 
 }
 
+class MathFunctions {
+  distanceSq: (position1, position2) => {
+    return Math.pow(position2.x - position1.x, 2) + Math.pow(position2.y - position1.y, 2) + Math.pow(position2.z - position1.z, 2)
+  }
+}
+
 let charType = Math.round(Math.random() * 1000000) % 4;
 
 export function configureBot(characterType) {
@@ -60,9 +74,11 @@ let CURRENT_ABILITY = 0;
 
 let lastEnemyId = -1;
 
-export async function runTurn(tickInfo, mostRecentMatchInfo, actionQueue) {
+export async function runTurn(playerId, tickInfo, mostRecentMatchInfo, actionQueue) {
 
   console.log(`Running 'runTurn' with new tickInfo`)
+
+  const myPlayer = BossRoomBot.getAlly(tickInfo, playerId);
 
   // Some abilities require an enemy/ally id and position
   const abilities = CharInfo.abilities[charType];
@@ -75,7 +91,7 @@ export async function runTurn(tickInfo, mostRecentMatchInfo, actionQueue) {
       console.log(`Found ${enemies.length} enemies!`);
       let randomEnemy = BossRoomBot.getEnemy(tickInfo, lastEnemyId);
       if (!randomEnemy) {
-        randomEnemy = enemies[Math.floor(Math.random() * enemies.length)];
+        randomEnemy = BossRoomBot.nearestEnemy(tickInfo, myPlayer.position);
       }
       if (randomEnemy) {
         lastEnemyId = randomEnemy.id;
