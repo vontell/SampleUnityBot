@@ -13,7 +13,7 @@ const CharInfo = {
   type: ["Mage", "Rogue", "Tank", "Archer"],
   abilities: [[0,1], [0,1,2], [0,1], [0,1,2]],
   // teamId
-  abilityTargets: [[1,0], [1,1,0], [1,0], [1,1,1]]
+  abilityTargets: [[1,0], [1,1,-1], [1,-1], [1,1,1]]
 
 }
 
@@ -103,7 +103,13 @@ export async function runTurn(playerId, tickInfo, mostRecentMatchInfo, actionQue
   } else {
       const allies = BossRoomBot.getAllies(tickInfo);
       console.log(`Found ${allies.length} allies!`);
-      const randomAlly = allies[Math.floor(Math.random() * allies.length)];
+      let randomAlly;
+      if (CharInfo.abilityTargets[charType][abilityIndex] < 0 ){
+        //target self
+        randomAlly = myPlayer;
+      } else {
+        randomAlly = allies[Math.floor(Math.random() * allies.length)];
+      }
       BossRoomBot.startAbility(ability, randomAlly.position, randomAlly.id, actionQueue);
   }
   CURRENT_ABILITY++;
