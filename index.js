@@ -78,6 +78,12 @@ export async function runTurn(playerId, tickInfo, mostRecentMatchInfo, actionQue
 
   console.log(`Running 'runTurn' with playerId: ${playerId}, tickInfo: ${JSON.stringify(tickInfo)}`)
 
+  // select 2 abilities per tick
+  selectAbility(playerId, tickInfo, mostRecentMatchInfo, actionQueue);
+  selectAbility(playerId, tickInfo, mostRecentMatchInfo, actionQueue);
+}
+
+function selectAbility(playerId, tickInfo, mostRecentMatchInfo, actionQueue) {
   const myPlayer = BossRoomBot.getAlly(tickInfo, playerId);
   console.log(`My player is at position: ${JSON.stringify(myPlayer.position)}`)
 
@@ -88,33 +94,32 @@ export async function runTurn(playerId, tickInfo, mostRecentMatchInfo, actionQue
   const ability = abilities[abilityIndex];
   console.log(`Trying out ability ${ability}`);
   if (CharInfo.abilityTargets[charType][abilityIndex] == 1) {
-      const enemies = BossRoomBot.getEnemies(tickInfo);
-      console.log(`Found ${enemies.length} enemies!`);
-      let randomEnemy = BossRoomBot.getEnemy(tickInfo, lastEnemyId);
-      if (!randomEnemy) {
-        randomEnemy = BossRoomBot.nearestEnemy(tickInfo, myPlayer.position);
-      }
-      if (randomEnemy) {
-        lastEnemyId = randomEnemy.id;
-        BossRoomBot.startAbility(ability, randomEnemy.position, randomEnemy.id, actionQueue);
-      } else {
-        lastEnemyId = -1;
-      }
+    const enemies = BossRoomBot.getEnemies(tickInfo);
+    console.log(`Found ${enemies.length} enemies!`);
+    let randomEnemy = BossRoomBot.getEnemy(tickInfo, lastEnemyId);
+    if (!randomEnemy) {
+      randomEnemy = BossRoomBot.nearestEnemy(tickInfo, myPlayer.position);
+    }
+    if (randomEnemy) {
+      lastEnemyId = randomEnemy.id;
+      BossRoomBot.startAbility(ability, randomEnemy.position, randomEnemy.id, actionQueue);
+    } else {
+      lastEnemyId = -1;
+    }
   } else {
-      const allies = BossRoomBot.getAllies(tickInfo);
-      console.log(`Found ${allies.length} allies!`);
-      let randomAlly;
-      if (CharInfo.abilityTargets[charType][abilityIndex] < 0 ){
-        //target self
-        randomAlly = myPlayer;
-      } else {
-        randomAlly = allies[Math.floor(Math.random() * allies.length)];
-      }
-      BossRoomBot.startAbility(ability, randomAlly.position, randomAlly.id, actionQueue);
+    const allies = BossRoomBot.getAllies(tickInfo);
+    console.log(`Found ${allies.length} allies!`);
+    let randomAlly;
+    if (CharInfo.abilityTargets[charType][abilityIndex] < 0 ){
+      //target self
+      randomAlly = myPlayer;
+    } else {
+      randomAlly = allies[Math.floor(Math.random() * allies.length)];
+    }
+    BossRoomBot.startAbility(ability, randomAlly.position, randomAlly.id, actionQueue);
   }
   CURRENT_ABILITY++;
-
-} 
+}
 
 export function getCharacterType() {
   return CharInfo.type[charType];
