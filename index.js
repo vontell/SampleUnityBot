@@ -47,6 +47,7 @@ const BossRoomBot = {
       yPosition: position != null ? position.y : null,
       zPosition: position != null ? position.z : null
     }
+    console.log(`Using abilility ${ability} on targetId: ${targetId} at position: ${input.xPosition}, ${input.yPosition}, ${input.zPosition}`)
     actionQueue.queue("PerformSkill", input)
   }
 //test
@@ -84,7 +85,7 @@ export async function runTurn(playerId, tickInfo, mostRecentMatchInfo, actionQue
 
 function selectAbility(playerId, tickInfo, mostRecentMatchInfo, actionQueue) {
   const myPlayer = BossRoomBot.getAlly(tickInfo, playerId);
-  console.log(`My player is at position: ${JSON.stringify(myPlayer.position)}`)
+  //console.log(`My player is at position: ${JSON.stringify(myPlayer.position)}`)
 
   // Some abilities require an enemy/ally id and position
   const abilities = CharInfo.abilities[charType];
