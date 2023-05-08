@@ -112,11 +112,11 @@ function selectAbility(playerId, tickInfo, mostRecentMatchInfo, actionQueue) {
     let randomAlly;
     if (targetType == -1 ){
       //target self
-      randomAlly = myPlayer;
+      randomAlly = null;
     } else {
       randomAlly = allies[Math.floor(Math.random() * allies.length)];
     }
-    BossRoomBot.startAbility(ability, randomAlly.position, randomAlly.id, actionQueue);
+    BossRoomBot.startAbility(ability, randomAlly.position, null, actionQueue);
   }
   CURRENT_ABILITY++;
 }
