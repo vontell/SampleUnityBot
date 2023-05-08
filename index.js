@@ -76,7 +76,7 @@ let lastEnemyId = -1;
 
 export async function runTurn(playerId, tickInfo, mostRecentMatchInfo, actionQueue) {
 
-  console.log(`Running 'runTurn' with playerId: ${playerId}, tickInfo: ${JSON.stringify(tickInfo)}`)
+  //console.log(`Running 'runTurn' with playerId: ${playerId}, tickInfo: ${JSON.stringify(tickInfo)}`)
 
   // select 2 abilities per tick
   selectAbility(playerId, tickInfo, mostRecentMatchInfo, actionQueue);
