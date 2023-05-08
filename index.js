@@ -80,7 +80,7 @@ export async function runTurn(playerId, tickInfo, mostRecentMatchInfo, actionQue
 
   // select 1 ability per tick
   selectAbility(playerId, tickInfo, mostRecentMatchInfo, actionQueue);
-}  
+}
 
 function selectAbility(playerId, tickInfo, mostRecentMatchInfo, actionQueue) {
   const myPlayer = BossRoomBot.getAlly(tickInfo, playerId);
@@ -115,7 +115,7 @@ function selectAbility(playerId, tickInfo, mostRecentMatchInfo, actionQueue) {
     } else {
       randomAlly = allies[Math.floor(Math.random() * allies.length)];
     }
-    BossRoomBot.startAbility(ability, randomAlly.position, null, actionQueue);
+    BossRoomBot.startAbility(ability, randomAlly ? randomAlly.position : null, randomAlly, actionQueue);
   }
   CURRENT_ABILITY++;
 }
