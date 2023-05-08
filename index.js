@@ -81,6 +81,9 @@ export async function runTurn(playerId, tickInfo, mostRecentMatchInfo, actionQue
 
   // select 1 ability per tick
   selectAbility(playerId, tickInfo, mostRecentMatchInfo, actionQueue);
+
+
+  //TODO: Add script sensors to the door and button so that a bot can walk to a button if door not open
 }
 
 function selectAbility(playerId, tickInfo, mostRecentMatchInfo, actionQueue) {
