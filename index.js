@@ -76,7 +76,7 @@ let lastEnemyId = -1;
 
 export async function runTurn(playerId, tickInfo, mostRecentMatchInfo, actionQueue) {
 
-  console.log(`Running 'runTurn' with new tickInfo`)
+  console.log(`Running 'runTurn' with playerId: ${playerId}, tickInfo: ${tickInfo}`)
 
   const myPlayer = BossRoomBot.getAlly(tickInfo, playerId);
 
