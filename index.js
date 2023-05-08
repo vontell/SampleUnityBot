@@ -43,9 +43,9 @@ const BossRoomBot = {
     const input = {
       skillId: ability,
       targetId: targetId,
-      xPosition: position.x,
-      yPosition: position.y,
-      zPosition: position.z
+      xPosition: position != null ? position.x : null,
+      yPosition: position != null ? position.y : null,
+      zPosition: position != null ? position.z : null
     }
     actionQueue.queue("PerformSkill", input)
   }
