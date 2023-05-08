@@ -79,6 +79,7 @@ export async function runTurn(playerId, tickInfo, mostRecentMatchInfo, actionQue
   console.log(`Running 'runTurn' with playerId: ${playerId}, tickInfo: ${JSON.stringify(tickInfo)}`)
 
   const myPlayer = BossRoomBot.getAlly(tickInfo, playerId);
+  console.log(`My player is at position: ${JSON.stringify(myPlayer.position)}`)
 
   // Some abilities require an enemy/ally id and position
   const abilities = CharInfo.abilities[charType];
