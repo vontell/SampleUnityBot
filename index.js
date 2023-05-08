@@ -111,7 +111,6 @@ function selectAbility(playerId, tickInfo, mostRecentMatchInfo, actionQueue) {
     console.log(`Found ${allies.length} allies!`);
     let randomAlly;
     if (targetType == -1 ){
-      //target self
       randomAlly = null;
     } else {
       randomAlly = allies[Math.floor(Math.random() * allies.length)];
