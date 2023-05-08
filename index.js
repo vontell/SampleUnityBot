@@ -37,7 +37,7 @@ const BossRoomBot = {
 
   nearestEnemy: (tickInfo, position) => {
     return RGBot.getEntitiesOnTeam(tickInfo, 1).toSorted((a,b) => MathFunctions.distanceSq(position, a.position) - MathFunctions.distanceSq(position, b.position));
-  }
+  },
 
   startAbility: (ability, position, targetId, actionQueue) => {
     const input = {
@@ -56,9 +56,9 @@ class RGValidator {
 
 }
 
-class MathFunctions {
+const MathFunctions = {
   distanceSq: (position1, position2) => {
-    return Math.pow(position2.x - position1.x, 2) + Math.pow(position2.y - position1.y, 2) + Math.pow(position2.z - position1.z, 2)
+    return Math.pow(position2.x - position1.x, 2) + Math.pow(position2.y - position1.y, 2) + Math.pow(position2.z - position1.z, 2);
   }
 }
 
