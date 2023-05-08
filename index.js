@@ -92,7 +92,8 @@ function selectAbility(playerId, tickInfo, mostRecentMatchInfo, actionQueue) {
   const abilityIndex = CURRENT_ABILITY % abilities.length;
   const ability = abilities[abilityIndex];
   console.log(`Trying out ability ${ability}`);
-  if (CharInfo.abilityTargets[charType][abilityIndex] == 1) {
+  const targetType = CharInfo.abilityTargets[charType][abilityIndex]
+  if ( targetType == 1) {
     const enemies = BossRoomBot.getEnemies(tickInfo);
     console.log(`Found ${enemies.length} enemies!`);
     let randomEnemy = BossRoomBot.getEnemy(tickInfo, lastEnemyId);
@@ -109,7 +110,7 @@ function selectAbility(playerId, tickInfo, mostRecentMatchInfo, actionQueue) {
     const allies = BossRoomBot.getAllies(tickInfo);
     console.log(`Found ${allies.length} allies!`);
     let randomAlly;
-    if (CharInfo.abilityTargets[charType][abilityIndex] < 0 ){
+    if (targetType == -1 ){
       //target self
       randomAlly = myPlayer;
     } else {
