@@ -50,7 +50,6 @@ const BossRoomBot = {
     console.log(`Using abilility ${ability} on targetId: ${targetId} at position: ${input.xPosition}, ${input.yPosition}, ${input.zPosition}`)
     actionQueue.queue("PerformSkill", input)
   }
-//test
 }
 
 class RGValidator {
