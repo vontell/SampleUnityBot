@@ -110,7 +110,7 @@ let CURRENT_ABILITY = 0;
 
 let lastEnemyId = -1;
 
-let rgValidator = RGValidator();
+let rgValidator = new RGValidator();
 
 export async function runTurn(playerId, tickInfo, mostRecentMatchInfo, actionQueue) {
 
