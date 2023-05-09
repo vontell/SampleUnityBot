@@ -47,7 +47,7 @@ const BossRoomBot = {
       yPosition: position != null ? position.y : null,
       zPosition: position != null ? position.z : null
     }
-    console.log(`Using abilility ${ability} on targetId: ${targetId} at position: ${input.xPosition}, ${input.yPosition}, ${input.zPosition}`)
+    // console.log(`Using abilility ${ability} on targetId: ${targetId} at position: ${input.xPosition}, ${input.yPosition}, ${input.zPosition}`)
     actionQueue.queue("PerformSkill", input)
   }
 }
@@ -128,17 +128,18 @@ export async function runTurn(playerId, tickInfo, mostRecentMatchInfo, actionQue
 function selectAbility(playerId, tickInfo, mostRecentMatchInfo, actionQueue) {
   const myPlayer = BossRoomBot.getAlly(tickInfo, playerId);
   const t = tickInfo.tick;
+  const charName = CharInfo.type[charType];
 
   // Some abilities require an enemy/ally id and position
   const abilities = CharInfo.abilities[charType];
-  console.log(`Considering abilities ${JSON.stringify(abilities)}`);
+  //console.log(`Considering abilities ${JSON.stringify(abilities)}`);
   const abilityIndex = CURRENT_ABILITY % abilities.length;
   const ability = abilities[abilityIndex];
-  console.log(`Trying out ability ${ability}`);
+  //console.log(`Trying out ability ${ability}`);
   const targetType = CharInfo.abilityTargets[charType][abilityIndex]
   if (targetType === 1) {
     const enemies = BossRoomBot.getEnemies(tickInfo);
-    console.log(`Found ${enemies.length} enemies!`);
+    //console.log(`Found ${enemies.length} enemies!`);
     let randomEnemy = BossRoomBot.getEnemy(tickInfo, lastEnemyId);
     if (!randomEnemy) {
       randomEnemy = BossRoomBot.nearestEnemy(tickInfo, myPlayer.position);
@@ -150,25 +151,25 @@ function selectAbility(playerId, tickInfo, mostRecentMatchInfo, actionQueue) {
       // 1. That a cooldown is now present
       // 2. That the cooldown goes away at some point in the future
       // 3. That the target has lost health
-      rgValidator.validate(`[${charType}] Ability on Cooldown - Offense Ability #` + ability, t + 100, (newTick) => {
+      rgValidator.validate(`[${charName}] Ability on Cooldown - Offense Ability #` + ability, t + 100, (newTick) => {
         const myState = BossRoomBot.getAlly(newTick, playerId);
-        console.log("Checking for in cooldown")
-        console.log(myState);
+        //console.log("Checking for in cooldown")
+        //console.log(myState);
         let isOnCooldown = myState.isOnCooldown[`ability${ability}Available`];
         return isOnCooldown === true; // turns null into false;
       });
-      rgValidator.validate(`[${charType}] Ability Recovered from Cooldown - Offense Ability #` + ability, t + 1000, (newTick) => {
+      rgValidator.validate(`[${charName}] Ability Recovered from Cooldown - Offense Ability #` + ability, t + 1000, (newTick) => {
         const myState = BossRoomBot.getAlly(newTick, playerId);
-        console.log("Checking for passed cooldown")
-        console.log(myState);
+        //console.log("Checking for passed cooldown")
+        //console.log(myState);
         let isOnCooldown = myState.isOnCooldown[`ability${ability}Available`];
         return isOnCooldown === false; // turns null into false;
       });
       const originalHealth = randomEnemy.health;
-      rgValidator.validate(`[${charType}] Damage Given - Offense Ability #` + ability, t + 1000, (newTick) => {
-        console.log(`Checking health of enemy (originally ${originalHealth})`)
+      rgValidator.validate(`[${charName}] Damage Given - Offense Ability #` + ability, t + 1000, (newTick) => {
+        //console.log(`Checking health of enemy (originally ${originalHealth})`)
         const enemyState = BossRoomBot.getEnemy(newTick, randomEnemy.id);
-        console.log(enemyState);
+        //console.log(enemyState);
         return enemyState.health < originalHealth;
       });
     } else {
@@ -176,7 +177,7 @@ function selectAbility(playerId, tickInfo, mostRecentMatchInfo, actionQueue) {
     }
   } else {
     const allies = BossRoomBot.getAllies(tickInfo);
-    console.log(`Found ${allies.length} allies!`);
+    //console.log(`Found ${allies.length} allies!`);
     let randomAlly;
     if (targetType === -1){
       randomAlly = null;
