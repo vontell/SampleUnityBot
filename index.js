@@ -52,7 +52,43 @@ const BossRoomBot = {
   }
 }
 
+/**
+ * Allows a bot to define a set of specifications for bot behavior.
+ * The validator queues up a test that needs to validate before the
+ * given tick timeout is reached.
+ */
 class RGValidator {
+
+  constructor() {
+    this.validations = [];
+  }
+
+  /**
+   * Clears all existing validations.
+   */
+  clearValidations = () => {
+    this.validations = [];
+  }
+
+  validate = (name, timeout, validatorFunction) => {
+    this.validations.push([name, timeout, validatorFunction])
+  }
+
+  checkValidations = (tickInfo) => {
+    let remainingValidations = [];
+    while (this.validations.length > 0) {
+      const [name, timeout, validatorFunction] = this.validations.shift();
+      if (timeout <= tickInfo.tick) {
+        console.log(`× ${name} FAILED`);
+      }
+      else if (!validatorFunction(tickInfo)) {
+        remainingValidations.push([name, timeout, validatorFunction]);
+      } else {
+        console.log(`✓ ${name} PASSED`);
+      }
+    }
+    this.validations = remainingValidations;
+  }
 
 }
 
@@ -74,20 +110,21 @@ let CURRENT_ABILITY = 0;
 
 let lastEnemyId = -1;
 
+let rgValidator = RGValidator();
+
 export async function runTurn(playerId, tickInfo, mostRecentMatchInfo, actionQueue) {
 
-  //console.log(`Running 'runTurn' with playerId: ${playerId}, tickInfo: ${JSON.stringify(tickInfo)}`)
+  // On each state, run through the validations and see if any failed or passed
+  rgValidator.checkValidations(tickInfo);
 
-  // select 1 ability per tick
+  // select 1 ability per update
   selectAbility(playerId, tickInfo, mostRecentMatchInfo, actionQueue);
-
 
   //TODO: Add script sensors to the door and button so that a bot can walk to a button if door not open
 }
 
 function selectAbility(playerId, tickInfo, mostRecentMatchInfo, actionQueue) {
   const myPlayer = BossRoomBot.getAlly(tickInfo, playerId);
-  //console.log(`My player is at position: ${JSON.stringify(myPlayer.position)}`)
 
   // Some abilities require an enemy/ally id and position
   const abilities = CharInfo.abilities[charType];
@@ -106,6 +143,25 @@ function selectAbility(playerId, tickInfo, mostRecentMatchInfo, actionQueue) {
     if (randomEnemy) {
       lastEnemyId = randomEnemy.id;
       BossRoomBot.startAbility(ability, randomEnemy.position, randomEnemy.id, actionQueue);
+      // This was an offensive ability used on a target. Run three validations
+      // 1. That a cooldown is now present
+      // 2. That the cooldown goes away at some point in the future
+      // 3. That the target has lost health
+      rgValidator.validate(`[${charType}] Cooldown Present - Offense Ability #` + CURRENT_ABILITY, 100, (newTick) => {
+        const myState = BossRoomBot.getAlly(newTick, playerId);
+        console.log(myState);
+        return true;
+      });
+      rgValidator.validate(`[${charType}] Cooldown Passed - Offense Ability #` + CURRENT_ABILITY, 500, (newTick) => {
+        const myState = BossRoomBot.getAlly(newTick, playerId);
+        console.log(myState);
+        return true;
+      });
+      rgValidator.validate(`[${charType}] Damage Given - Offense Ability #` + CURRENT_ABILITY, 100, (newTick) => {
+        const myState = BossRoomBot.getEnemy(newTick, randomEnemy.id);
+        console.log(myState);
+        return true;
+      });
     } else {
       lastEnemyId = -1;
     }
