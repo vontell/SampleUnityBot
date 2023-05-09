@@ -67,27 +67,29 @@ class RGValidator {
    * Clears all existing validations.
    */
   clearValidations = () => {
-    this.validations = [];
+    this.validations = {};
   }
 
   validate = (name, timeout, validatorFunction) => {
-    this.validations.push([name, timeout, validatorFunction])
+    if (this.validations.hasOwnProperty(name)) return;
+    this.validations[name] = ["WAITING", timeout, validatorFunction];
   }
 
   checkValidations = (tickInfo) => {
-    let remainingValidations = [];
-    while (this.validations.length > 0) {
-      const [name, timeout, validatorFunction] = this.validations.shift();
+    for (let name in this.validations) {
+      const [status, timeout, validatorFunction] = this.validations[name];
+      if (status !== "WAITING") continue;
       if (timeout <= tickInfo.tick) {
         console.log(`× ${name} FAILED`);
+        this.validations[name][0] = "FAILED";
       }
       else if (!validatorFunction(tickInfo)) {
-        remainingValidations.push([name, timeout, validatorFunction]);
+        // Continue waiting
       } else {
         console.log(`✓ ${name} PASSED`);
+        this.validations[name][0] = "PASSED";
       }
     }
-    this.validations = remainingValidations;
   }
 
 }
@@ -101,8 +103,8 @@ const MathFunctions = {
 let charType = Math.round(Math.random() * 1000000) % 4;
 
 export function configureBot(characterType) {
-  console.log(`Unity bot configureBot function called, charType: ${charType} - characterType: ${characterType}`)
-  charType = CharInfo.type.indexOf(characterType)
+  console.log(`Unity bot configureBot function called, charType: ${charType} - characterType: ${characterType}`);
+  charType = CharInfo.type.indexOf(characterType);
 }
 
 
@@ -125,6 +127,7 @@ export async function runTurn(playerId, tickInfo, mostRecentMatchInfo, actionQue
 
 function selectAbility(playerId, tickInfo, mostRecentMatchInfo, actionQueue) {
   const myPlayer = BossRoomBot.getAlly(tickInfo, playerId);
+  const t = tickInfo.tick;
 
   // Some abilities require an enemy/ally id and position
   const abilities = CharInfo.abilities[charType];
@@ -147,14 +150,14 @@ function selectAbility(playerId, tickInfo, mostRecentMatchInfo, actionQueue) {
       // 1. That a cooldown is now present
       // 2. That the cooldown goes away at some point in the future
       // 3. That the target has lost health
-      rgValidator.validate(`[${charType}] Ability on Cooldown - Offense Ability #` + ability, 100, (newTick) => {
+      rgValidator.validate(`[${charType}] Ability on Cooldown - Offense Ability #` + ability, t + 100, (newTick) => {
         const myState = BossRoomBot.getAlly(newTick, playerId);
         console.log("Checking for in cooldown")
         console.log(myState);
         let isOnCooldown = myState.isOnCooldown[`ability${ability}Available`];
         return isOnCooldown === true; // turns null into false;
       });
-      rgValidator.validate(`[${charType}] Ability Recovered from Cooldown - Offense Ability #` + ability, 1000, (newTick) => {
+      rgValidator.validate(`[${charType}] Ability Recovered from Cooldown - Offense Ability #` + ability, t + 1000, (newTick) => {
         const myState = BossRoomBot.getAlly(newTick, playerId);
         console.log("Checking for passed cooldown")
         console.log(myState);
@@ -162,7 +165,7 @@ function selectAbility(playerId, tickInfo, mostRecentMatchInfo, actionQueue) {
         return isOnCooldown === false; // turns null into false;
       });
       const originalHealth = randomEnemy.health;
-      rgValidator.validate(`[${charType}] Damage Given - Offense Ability #` + ability, 1000, (newTick) => {
+      rgValidator.validate(`[${charType}] Damage Given - Offense Ability #` + ability, t + 1000, (newTick) => {
         console.log(`Checking health of enemy (originally ${originalHealth})`)
         const enemyState = BossRoomBot.getEnemy(newTick, randomEnemy.id);
         console.log(enemyState);
