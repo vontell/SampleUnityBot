@@ -133,7 +133,7 @@ function selectAbility(playerId, tickInfo, mostRecentMatchInfo, actionQueue) {
   const ability = abilities[abilityIndex];
   console.log(`Trying out ability ${ability}`);
   const targetType = CharInfo.abilityTargets[charType][abilityIndex]
-  if ( targetType == 1) {
+  if (targetType === 1) {
     const enemies = BossRoomBot.getEnemies(tickInfo);
     console.log(`Found ${enemies.length} enemies!`);
     let randomEnemy = BossRoomBot.getEnemy(tickInfo, lastEnemyId);
@@ -147,20 +147,26 @@ function selectAbility(playerId, tickInfo, mostRecentMatchInfo, actionQueue) {
       // 1. That a cooldown is now present
       // 2. That the cooldown goes away at some point in the future
       // 3. That the target has lost health
-      rgValidator.validate(`[${charType}] Cooldown Present - Offense Ability #` + CURRENT_ABILITY, 100, (newTick) => {
+      rgValidator.validate(`[${charType}] Ability on Cooldown - Offense Ability #` + ability, 100, (newTick) => {
         const myState = BossRoomBot.getAlly(newTick, playerId);
+        console.log("Checking for in cooldown")
         console.log(myState);
-        return true;
+        let isOnCooldown = myState.isOnCooldown[`ability${ability}Available`];
+        return isOnCooldown === true; // turns null into false;
       });
-      rgValidator.validate(`[${charType}] Cooldown Passed - Offense Ability #` + CURRENT_ABILITY, 500, (newTick) => {
+      rgValidator.validate(`[${charType}] Ability Recovered from Cooldown - Offense Ability #` + ability, 1000, (newTick) => {
         const myState = BossRoomBot.getAlly(newTick, playerId);
+        console.log("Checking for passed cooldown")
         console.log(myState);
-        return true;
+        let isOnCooldown = myState.isOnCooldown[`ability${ability}Available`];
+        return isOnCooldown === false; // turns null into false;
       });
-      rgValidator.validate(`[${charType}] Damage Given - Offense Ability #` + CURRENT_ABILITY, 100, (newTick) => {
-        const myState = BossRoomBot.getEnemy(newTick, randomEnemy.id);
-        console.log(myState);
-        return true;
+      const originalHealth = randomEnemy.health;
+      rgValidator.validate(`[${charType}] Damage Given - Offense Ability #` + ability, 1000, (newTick) => {
+        console.log(`Checking health of enemy (originally ${originalHealth})`)
+        const enemyState = BossRoomBot.getEnemy(newTick, randomEnemy.id);
+        console.log(enemyState);
+        return enemyState.health < originalHealth;
       });
     } else {
       lastEnemyId = -1;
@@ -169,7 +175,7 @@ function selectAbility(playerId, tickInfo, mostRecentMatchInfo, actionQueue) {
     const allies = BossRoomBot.getAllies(tickInfo);
     console.log(`Found ${allies.length} allies!`);
     let randomAlly;
-    if (targetType == -1 ){
+    if (targetType === -1){
       randomAlly = null;
     } else {
       randomAlly = allies[Math.floor(Math.random() * allies.length)];
