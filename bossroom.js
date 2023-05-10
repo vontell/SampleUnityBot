@@ -52,10 +52,10 @@ export const BossRoomBot = {
         actionQueue.queue("PerformSkill", input)
     },
 
-    moveTowards: (target, actionQueue) => {
+    moveTowards: (target, range, actionQueue) => {
         const input = {
             targetId: target.id,
-            range: 0.5
+            range: range
         }
         actionQueue.queue("FollowObject", input)
     }
