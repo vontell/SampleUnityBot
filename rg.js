@@ -2,7 +2,11 @@
 export const RGBot = {
 
     getEntitiesOnTeam: (tickInfo, team) => {
-        return Object.values(tickInfo.gameState).filter(bot => bot.team === team);
+        return Object.values(tickInfo.gameState).filter(e => e.team === team);
+    },
+
+    getEntitiesOfType: (tickInfo, type) => {
+        return Object.values(tickInfo.gameState).filter(e => e.type === type);
     }
 
 }

@@ -32,6 +32,14 @@ export const BossRoomBot = {
         return RGBot.getEntitiesOnTeam(tickInfo, 1).filter(entry => !entry.broken).sort((a,b) => MathFunctions.distanceSq(position, a.position) - MathFunctions.distanceSq(position, b.position)).find(() => true);
     },
 
+    getDoorSwitch: (tickInfo) => {
+        return RGBot.getEntitiesOfType(tickInfo, "FloorSwitch")[0];
+    },
+
+    getHumans: (tickInfo) => {
+        return RGBot.getEntitiesOfType(tickInfo, "HumanPlayer");
+    },
+
     startAbility: (ability, position, targetId, actionQueue) => {
         const input = {
             skillId: ability,
@@ -40,7 +48,14 @@ export const BossRoomBot = {
             yPosition: position != null ? position.y : null,
             zPosition: position != null ? position.z : null
         }
-        // console.log(`Using abilility ${ability} on targetId: ${targetId} at position: ${input.xPosition}, ${input.yPosition}, ${input.zPosition}`)
+        // console.log(`Using ability ${ability} on targetId: ${targetId} at position: ${input.xPosition}, ${input.yPosition}, ${input.zPosition}`)
         actionQueue.queue("PerformSkill", input)
+    },
+
+    moveTowards: (target, actionQueue) => {
+        const input = {
+            targetId: target.id
+        }
+        actionQueue.queue("FollowObject", input)
     }
 }
