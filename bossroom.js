@@ -54,7 +54,8 @@ export const BossRoomBot = {
 
     moveTowards: (target, actionQueue) => {
         const input = {
-            targetId: target.id
+            targetId: target.id,
+            range: 0.5
         }
         actionQueue.queue("FollowObject", input)
     }
