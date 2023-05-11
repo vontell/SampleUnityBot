@@ -2,7 +2,7 @@
   "name": "rg-unity-js-template",
   "version": "1.0.0",
   "description": "A simple example for getting started with the rg-bot package with JavaScript.",
-  "main": "index.js",
+  "main": "coopbot/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

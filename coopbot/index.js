@@ -1,5 +1,5 @@
-import {BossRoomBot, CharInfo} from "./bossroom";
-import {MathFunctions, RGValidator} from "./rg";
+import {BossRoomBot, CharInfo} from "../bossroom";
+import {MathFunctions, RGValidator} from "../rg";
 
 export function configureBot(characterType) {
   console.log(`Unity bot configureBot function called, charType: ${getCharacterType()} - characterType: ${characterType}`);
