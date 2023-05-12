@@ -1,5 +1,5 @@
-import {BossRoomBot, CharInfo} from "./bossroom";
-import {RGValidator} from "./rg";
+import {BossRoomBot, CharInfo} from "../bossroom";
+import {RGValidator} from "../rg";
 
 
 let charType = Math.round(Math.random() * 1000000) % 4;
