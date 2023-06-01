@@ -54,9 +54,10 @@ export async function runTurn(playerId, tickInfo, mostRecentMatchInfo, actionQue
 }
 
 function getInteractableButton(tickInfo, buttonName) {
-  let buttons = RGBot.getEntitiesOfType(tickInfo, buttonName);
+  const buttons = RGBot.getEntitiesOfType(tickInfo, buttonName);
+  console.log(`Found buttons: ${JSON.stringify(buttons)}`)
   if (buttons && buttons.length > 0) {
-    let button = buttons[0];
+    const button = buttons[0];
     if (button.interactable) {
       return button;
     }
