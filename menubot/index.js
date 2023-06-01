@@ -33,12 +33,12 @@ export async function runTurn(playerId, tickInfo, mostRecentMatchInfo, actionQue
       }
       break;
     case "CharSelect":
-      const startButton = getInteractableButton("Seat7Button");
+      const seat7Button = getInteractableButton("Seat7Button");
       if (button) {
         clickButton(button.id);
       }
 
-      const hostButton = getInteractableButton("ReadyButton");
+      const readyButton = getInteractableButton("ReadyButton");
       if (button) {
         clickButton(button.id);
       }
