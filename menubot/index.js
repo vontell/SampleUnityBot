@@ -22,23 +22,23 @@ export async function runTurn(playerId, tickInfo, mostRecentMatchInfo, actionQue
 
   switch (sceneName) {
     case "MainMenu":
-      const startButton = getInteractableButton("StartWithRGButton");
+      const startButton = getInteractableButton(tickInfo, "StartWithRGButton");
       if (button) {
         clickButton(button.id);
       }
 
-      const hostButton = getInteractableButton("RGHostButton");
+      const hostButton = getInteractableButton(tickInfo, "RGHostButton");
       if (button) {
         clickButton(button.id);
       }
       break;
     case "CharSelect":
-      const seat7Button = getInteractableButton("Seat7Button");
+      const seat7Button = getInteractableButton(tickInfo, "Seat7Button");
       if (button) {
         clickButton(button.id);
       }
 
-      const readyButton = getInteractableButton("ReadyButton");
+      const readyButton = getInteractableButton(tickInfo, "ReadyButton");
       if (button) {
         clickButton(button.id);
       }
@@ -51,7 +51,7 @@ export async function runTurn(playerId, tickInfo, mostRecentMatchInfo, actionQue
 
 }
 
-function getInteractableButton(buttonName) {
+function getInteractableButton(tickInfo, buttonName) {
   let buttons = RGBot.getEntitiesOfType(tickInfo, buttonName);
   if (buttons && buttons.length > 0) {
     let button = buttons[0];
