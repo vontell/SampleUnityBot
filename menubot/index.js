@@ -23,24 +23,24 @@ export async function runTurn(playerId, tickInfo, mostRecentMatchInfo, actionQue
   switch (sceneName) {
     case "MainMenu":
       const startButton = getInteractableButton(tickInfo, "StartWithRGButton");
-      if (button) {
-        clickButton(button.id);
+      if (startButton) {
+        clickButton(startButton.id);
       }
 
       const hostButton = getInteractableButton(tickInfo, "RGHostButton");
-      if (button) {
-        clickButton(button.id);
+      if (hostButton) {
+        clickButton(hostButton.id);
       }
       break;
     case "CharSelect":
       const seat7Button = getInteractableButton(tickInfo, "Seat7Button");
-      if (button) {
-        clickButton(button.id);
+      if (seat7Button) {
+        clickButton(seat7Button.id);
       }
 
       const readyButton = getInteractableButton(tickInfo, "ReadyButton");
-      if (button) {
-        clickButton(button.id);
+      if (readyButton) {
+        clickButton(readyButton.id);
       }
       break;
     default:
