@@ -83,3 +83,16 @@ export function getCharacterType() {
 export function isComplete() {
   return botComplete;
 }
+
+/**
+    One of ...
+    SPAWNABLE - Server disconnects/ends bot on match/game-scene teardown
+    PERSISTENT - Bot is responsible for disconnecting / ending itself
+ */
+export function getBotLifecycle() {
+  return 'PERSISTENT';
+}
+
+export function isSpawnable() {
+  return false;
+}
