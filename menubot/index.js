@@ -20,6 +20,8 @@ export async function runTurn(playerId, tickInfo, mostRecentMatchInfo, actionQue
   const t = tickInfo.tick;
   const sceneName = tickInfo.sceneName;
 
+  console.log(`Processing tickInfo: ${JSON.stringify(tickInfo)}`)
+
   switch (sceneName) {
     case "MainMenu":
       const startButton = getInteractableButton(tickInfo, "StartWithRGButton");
