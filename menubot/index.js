@@ -59,6 +59,7 @@ function getInteractableButton(tickInfo, buttonName) {
   if (buttons && buttons.length > 0) {
     const button = buttons[0];
     if (button.interactable) {
+      console.log(`Returning button: ${JSON.stringify(button)}`)
       return button;
     }
   }
