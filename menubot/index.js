@@ -29,7 +29,7 @@ export async function runTurn(playerId, tickInfo, mostRecentMatchInfo, actionQue
   switch (sceneName) {
     case "MainMenu":
       const hostButton = getInteractableButton(tickInfo, "RGHostButton");
-      if (hostButton && !stateFlags[1]) {
+      if (hostButton && stateFlags[0] && !stateFlags[1]) {
         clickButton(hostButton.id, actionQueue);
         stateFlags[1] = true
       }
@@ -43,7 +43,7 @@ export async function runTurn(playerId, tickInfo, mostRecentMatchInfo, actionQue
       break;
     case "CharSelect":
       const readyButton = getInteractableButton(tickInfo, "ReadyButton");
-      if (readyButton && !stateFlags[3]) {
+      if (readyButton && stateFlags[2] && !stateFlags[3]) {
         clickButton(readyButton.id, actionQueue);
         stateFlags[3] = true
       }
