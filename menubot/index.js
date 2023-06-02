@@ -12,8 +12,8 @@ let rgValidator = new RGValidator();
 
 let botComplete = false;
 
-// flags for clicking the 4 buttons we need to click
-let stateFlags = [false,false,false,false]
+// flags for clicking the 6 buttons we need to click to start the game
+let stateFlags = [false,false,false,false,false,false]
 
 export async function runTurn(playerId, tickInfo, mostRecentMatchInfo, actionQueue) {
 
@@ -28,6 +28,7 @@ export async function runTurn(playerId, tickInfo, mostRecentMatchInfo, actionQue
 
   switch (sceneName) {
     case "MainMenu":
+
       const hostButton = getInteractableButton(tickInfo, "RGHostButton");
       if (hostButton && stateFlags[0] && !stateFlags[1]) {
         clickButton(hostButton.id, actionQueue);
@@ -35,9 +36,21 @@ export async function runTurn(playerId, tickInfo, mostRecentMatchInfo, actionQue
       }
 
       const startButton = getInteractableButton(tickInfo, "StartWithRGButton");
-      if (startButton && !stateFlags[0]) {
+      if (startButton && stateFlags[5] && !stateFlags[0]) {
         clickButton(startButton.id, actionQueue);
         stateFlags[0] = true
+      }
+
+      const selectProfileButton = getInteractableButton(tickInfo, "SelectProfileButton");
+      if (selectProfileButton && stateFlags[4] && !stateFlags[5]) {
+        clickButton(selectProfileButton.id, actionQueue);
+        stateFlags[5] = true
+      }
+
+      const profileMenuButton = getInteractableButton(tickInfo, "ProfileMenuButton");
+      if (profileMenuButton && !stateFlags[4]) {
+        clickButton(profileMenuButton.id, actionQueue);
+        stateFlags[4] = true
       }
 
       break;
