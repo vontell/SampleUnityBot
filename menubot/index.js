@@ -12,6 +12,9 @@ let rgValidator = new RGValidator();
 
 let botComplete = false;
 
+// flags for clicking the 4 buttons we need to click
+let stateFlags = [false,false,false,false]
+
 export async function runTurn(playerId, tickInfo, mostRecentMatchInfo, actionQueue) {
 
   // On each state, run through the validations and see if any failed or passed
@@ -20,33 +23,41 @@ export async function runTurn(playerId, tickInfo, mostRecentMatchInfo, actionQue
   const t = tickInfo.tick;
   const sceneName = tickInfo.sceneName;
 
+  // too spammy but good for debugging
   console.log(`Processing tickInfo: ${JSON.stringify(tickInfo)}`)
 
   switch (sceneName) {
     case "MainMenu":
-      const startButton = getInteractableButton(tickInfo, "StartWithRGButton");
-      if (startButton) {
-        clickButton(startButton.id, actionQueue);
+      const hostButton = getInteractableButton(tickInfo, "RGHostButton");
+      if (hostButton && !stateFlags[1]) {
+        clickButton(hostButton.id, actionQueue);
+        stateFlags[1] = true
       }
 
-      const hostButton = getInteractableButton(tickInfo, "RGHostButton");
-      if (hostButton) {
-        clickButton(hostButton.id, actionQueue);
+      const startButton = getInteractableButton(tickInfo, "StartWithRGButton");
+      if (startButton && !stateFlags[0]) {
+        clickButton(startButton.id, actionQueue);
+        stateFlags[0] = true
       }
+
       break;
     case "CharSelect":
-      const seat7Button = getInteractableButton(tickInfo, "Seat7Button");
-      if (seat7Button) {
-        clickButton(seat7Button.id, actionQueue);
+      const readyButton = getInteractableButton(tickInfo, "ReadyButton");
+      if (readyButton && !stateFlags[3]) {
+        clickButton(readyButton.id, actionQueue);
+        stateFlags[3] = true
       }
 
-      const readyButton = getInteractableButton(tickInfo, "ReadyButton");
-      if (readyButton) {
-        clickButton(readyButton.id, actionQueue);
+      const seat7Button = getInteractableButton(tickInfo, "Seat7Button");
+      if (seat7Button && !stateFlags[2]) {
+        clickButton(seat7Button.id, actionQueue);
+        stateFlags[2] = true
       }
+
       break;
     default:
       // teardown myself
+      console.log(`Game started, bot is Complete`)
       botComplete = true;
       break;
   }
