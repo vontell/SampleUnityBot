@@ -115,7 +115,7 @@ export function isComplete() {
 
 /**
     One of ...
-    SPAWNABLE - Server disconnects/ends bot on match/game-scene teardown
+    MANAGED - Server disconnects/ends bot on match/game-scene teardown
     PERSISTENT - Bot is responsible for disconnecting / ending itself
  */
 export function getBotLifecycle() {
