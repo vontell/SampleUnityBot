@@ -18,13 +18,17 @@ let rgValidator = new RGValidator();
 
 export async function runTurn(playerId, tickInfo, mostRecentMatchInfo, actionQueue) {
 
-  // On each state, run through the validations and see if any failed or passed
-  rgValidator.checkValidations(tickInfo);
 
-  // select 1 ability per update
-  selectAbility(playerId, tickInfo, mostRecentMatchInfo, actionQueue);
+  if ("BossRoom" == tickInfo.sceneName) {
 
-  //TODO: Add script sensors to the door and button so that a bot can walk to a button if door not open
+    // On each state, run through the validations and see if any failed or passed
+    rgValidator.checkValidations(tickInfo);
+
+    // select 1 ability per update
+    selectAbility(playerId, tickInfo, mostRecentMatchInfo, actionQueue);
+
+    //TODO: Add script sensors to the door and button so that a bot can walk to a button if door not open
+  }
 }
 
 /**
@@ -71,7 +75,7 @@ function selectAbility(playerId, tickInfo, mostRecentMatchInfo, actionQueue) {
       const originalHealth = randomEnemy.health;
       rgValidator.validate(`[${charName}] Damage Given - Offense Ability #` + ability, t + 1000, (newTick) => {
         const enemyState = BossRoomBot.getEnemy(newTick, randomEnemy.id);
-        return enemyState.health < originalHealth;
+        return !enemyState || enemyState.health < originalHealth;
       });
 
     } else {
