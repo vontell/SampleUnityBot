@@ -34,7 +34,7 @@ export function configureBot(bot) {
 
 
 export async function runTurn(bot) {
-  console.log(`BOTCODE Tick number ${tickInfo.tick}: ${JSON.stringify(bot.getState())}`);
+  console.log(`BOTCODE Tick: ${JSON.stringify(bot.getState())}`);
 }
 
 /**
