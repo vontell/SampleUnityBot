@@ -9,6 +9,7 @@ export async function configureBot(bot) {
   console.log("hello?");
 
   rg = new Validator(bot)
+  rg.wait(() => { return rg.state() })
 
   // validate we're on the main menu
   rg.expect(rg.state().sceneName).toEqual("MainMenu");
