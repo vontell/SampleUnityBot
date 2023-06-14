@@ -99,8 +99,9 @@ export default class Validator {
   
     async findEntityByType(objectType) {
         console.log(`finding entity of type ${objectType}`)
+        const self = this;
         return await this.wait(() => {
-            const entities = findEntitiesByType(objectType);
+            const entities = self.findEntitiesByType(objectType);
             const entity = entities.length > 0 ? entity[0] : null;
             return entity;
         });       
