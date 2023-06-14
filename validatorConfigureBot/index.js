@@ -67,7 +67,7 @@ export async function configureBot(bot) {
  * @returns {boolean} true if done processing and ready to be torn down
  */
  export function isComplete() {
-  return rg.isComplete();
+  return rg.isComplete() || false;
 }
 
 /**
