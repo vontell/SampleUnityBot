@@ -4,6 +4,7 @@
 ////////////////////////////
 
 import { resolve } from "path";
+import { RGBot } from "../rg";
 
 /**
  * Perform assertions against a primitive value
@@ -55,7 +56,7 @@ export default class Validator {
      * The specified timeout, or the configured default if no override is given
      * @param {object} opts
      */
-    #timeout(opts = {}) {
+    timeout(opts = {}) {
         return opts.timeout || defaultTimeout;
     }
   
@@ -82,12 +83,18 @@ export default class Validator {
     isComplete() {
         return this.#complete;
     }
+
+    async getSceneName() {
+        return this.wait(() => {
+            return this.#bot?.getState()?.sceneName ? this.#bot.getState().sceneName : null;
+        });
+    }
   
     /**
-     * @param {string} sceneName The name of the scene
+     * @param {string} value
      */
-    expect(sceneName) {
-        return new Matchers(sceneName);
+    expect(value) {
+        return new Matchers(value);
     }
   
     async findEntityByType(objectType) {
@@ -113,7 +120,7 @@ export default class Validator {
             if(result) {
                 resolve(result);
             }
-            else if (Date.now() - start >= this.#timeout()) {
+            else if (Date.now() - start >= this.timeout()) {
                 resolve(null);
             }
             else {

@@ -9,10 +9,10 @@ export async function configureBot(bot) {
   console.log("hello?");
 
   rg = new Validator(bot)
-  rg.wait(() => { return rg.state() })
 
   // validate we're on the main menu
-  rg.expect(rg.state().sceneName).toEqual("MainMenu");
+  const scene = await rg.getSceneName();
+  rg.expect(sceneName).toEqual("MainMenu");
 
   // get to the character select screen
   const profileMenuButton = await rg.findEntityByType("ProfileMenuButton");
