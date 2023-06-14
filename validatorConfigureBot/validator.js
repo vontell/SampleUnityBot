@@ -112,15 +112,16 @@ export default class Validator {
     }
 
     wait(callback) {
+        let self = this;
         const start = Date.now();
-
+        
         function waitFor(resolve, reject) {
             const result = callback()
             console.log(`res ${result}`)
             if(result) {
                 resolve(result);
             }
-            else if (Date.now() - start >= this.timeout()) {
+            else if (Date.now() - start >= self.timeout()) {
                 resolve(null);
             }
             else {
