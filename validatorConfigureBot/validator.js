@@ -60,7 +60,6 @@ export default class Validator {
     #complete = false;
 
     constructor(bot) {
-        super();
         this.#bot = bot;
     }
   
