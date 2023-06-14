@@ -91,6 +91,7 @@ export default class Validator {
     }
   
     async findEntityByType(objectType) {
+        console.log(`finding entity of type ${objectType}`)
         return await this.wait(() => {
             const entities = findEntitiesByType(objectType);
             const entity = entities.length > 0 ? entity[0] : null;
@@ -108,6 +109,7 @@ export default class Validator {
 
         function waitFor(resolve, reject) {
             const result = callback()
+            console.log(`res ${result}`)
             if(result) {
                 resolve(result);
             }
