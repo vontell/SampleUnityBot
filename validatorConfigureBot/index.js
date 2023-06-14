@@ -12,7 +12,7 @@ export async function configureBot(bot) {
 
   // validate we're on the main menu
   const scene = await rg.getSceneName();
-  rg.expect(sceneName).toEqual("MainMenu");
+  rg.expect(scene).toEqual("MainMenu");
 
   // get to the character select screen
   const profileMenuButton = await rg.findEntityByType("ProfileMenuButton");
