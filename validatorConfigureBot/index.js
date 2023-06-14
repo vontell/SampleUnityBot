@@ -1,6 +1,5 @@
-import { waitForDebugger } from "inspector";
 import { CharInfo } from "../bossroom";
-import { Validator } from "./validator";
+import Validator from "./validator";
 
 let charType = 1; // fixed to rogue character
 let rg;
