@@ -7,6 +7,8 @@ let rg;
 
 export async function configureBot(bot) {
 
+  console.log("hello?");
+  
   rg = new Validator(bot)
 
   // validate we're on the main menu
