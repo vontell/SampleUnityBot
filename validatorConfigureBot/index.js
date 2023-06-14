@@ -8,7 +8,7 @@ let rg;
 export async function configureBot(bot) {
 
   console.log("hello?");
-  
+
   rg = new Validator(bot)
 
   // validate we're on the main menu
@@ -75,4 +75,17 @@ export async function configureBot(bot) {
  */
 export function getCharacterType() {
   return CharInfo.type[charType];
+}
+
+/**
+    One of ...
+    MANAGED - Server disconnects/ends bot on match/game-scene teardown
+    PERSISTENT - Bot is responsible for disconnecting / ending itself
+ */
+export function getBotLifecycle() {
+  return 'PERSISTENT';
+}
+
+export function isSpawnable() {
+  return false;
 }
