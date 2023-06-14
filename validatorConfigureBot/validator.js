@@ -57,7 +57,7 @@ export default class Validator {
      * @param {object} opts
      */
     timeout(opts = {}) {
-        return opts.timeout || defaultTimeout;
+        return opts.timeout || this.#defaultTimeout;
     }
   
     #complete = false;
