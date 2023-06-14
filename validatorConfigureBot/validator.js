@@ -3,6 +3,8 @@
 // bot + validator will be one object eventually as "rg"
 ////////////////////////////
 
+import { resolve } from "path";
+
 /**
  * Perform assertions against a primitive value
  */
@@ -88,18 +90,36 @@ export default class Validator {
         return new Matchers(sceneName);
     }
   
-    findEntityByType(objectType) {
-        const entities = findEntitiesByType(objectType);
-        const entity = entities.length > 0 ? entity[0] : null;
-        if(entity == null) {
-            console.error(`Could not find entity with type ${objectType}`);
-        }
-        return entity;
+    async findEntityByType(objectType) {
+        return await this.wait(() => {
+            const entities = findEntitiesByType(objectType);
+            const entity = entities.length > 0 ? entity[0] : null;
+            return entity;
+        });       
     }
   
     findEntitiesByType(objectType) {
       const entities = Object.values(this.state()).filter(e => e.objectType === objectType);
       return !entities ? [] : entities
+    }
+
+    wait(callback) {
+        const start = Date.now();
+
+        function waitFor(resolve, reject) {
+            const result = callback()
+            if(result) {
+                resolve(result);
+            }
+            else if (Date.now() - start >= this.#timeout()) {
+                resolve(null);
+            }
+            else {
+                setTimeout(waitFor.bind(this, resolve, reject), 500);
+            }
+        }
+
+        return new Promise(waitFor);
     }
   
   }
