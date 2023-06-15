@@ -10,9 +10,9 @@ let rg = null;
 }
 
 /**
-    One of ...
-    MANAGED - Server disconnects/ends bot on match/game-scene teardown
-    PERSISTENT - Bot is responsible for disconnecting / ending itself
+ * One of ...
+ * MANAGED - Server disconnects/ends bot on match/game-scene teardown
+ * PERSISTENT - Bot is responsible for disconnecting / ending itself
  */
 export function getBotLifecycle() {
   return 'PERSISTENT';

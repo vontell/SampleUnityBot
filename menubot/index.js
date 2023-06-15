@@ -1,16 +1,38 @@
-import {BossRoomBot, CharInfo} from "../bossroom";
-import {RGValidator, RGBot} from "../rg";
+import { CharInfo } from "../bossroom";
 
-let charType = 1; // fixed to rogue character
+let rg = null;
 
-export function configureBot(characterType) {
-  console.log(`Unity bot configureBot function called, charType: ${charType} - characterType: ${characterType}`);
-  charType = CharInfo.type.indexOf(characterType);
+/**
+ * Defines the type of character that the game should use for this bot.
+ */
+ export function getCharacterType() {
+  return CharInfo.type[1]; // fixed to rogue character
 }
 
-let rgValidator = new RGValidator();
+/**
+ * One of ...
+ * MANAGED - Server disconnects/ends bot on match/game-scene teardown
+ * PERSISTENT - Bot is responsible for disconnecting / ending itself
+ */
+export function getBotLifecycle() {
+  return 'PERSISTENT';
+}
 
-let botComplete = false;
+/**
+ * @returns {boolean} true if I'm an in-game character, or false if I'm an invisible navigator/observer/etc.
+ */
+export function isSpawnable() {
+  return false;
+}
+
+/**
+ * Let server know if i have finished my processing
+ * @returns {boolean} true if done processing and ready to be torn down
+ */
+export function isComplete() {
+  return rg ? rg.isComplete() : false;
+}
+
 
 // flags for clicking the 6 buttons we need to click to start the game
 let stateFlags = {
@@ -24,44 +46,39 @@ let stateFlags = {
 
 let playedGame = false;
 
-export async function runTurn(playerId, tickInfo, mostRecentMatchInfo, actionQueue) {
+export async function configureBot(rgObject) {
+  rg = rgObject;
+}
 
-  // On each state, run through the validations and see if any failed or passed
-  rgValidator.checkValidations(tickInfo);
+export async function runTurn(rgObject) {
 
-  const t = tickInfo.tick;
-  const sceneName = tickInfo.sceneName;
-
-  // too spammy but good for debugging
-  //console.log(`Processing tickInfo: ${JSON.stringify(tickInfo)}`)
-
-  switch (sceneName) {
+  switch (rg.getState().sceneName) {
     case "MainMenu":
 
       if (playedGame) {
-        botComplete = true;
+        rg.complete()
       } else {
-        const hostButton = getInteractableButton(tickInfo, "RGHostButton");
+        const hostButton = await getInteractableButton("RGHostButton");
         if (hostButton && stateFlags["StartWithRGButton"] && !stateFlags["RGHostButton"]) {
-          clickButton(hostButton.id, actionQueue);
+          rg.performAction("ClickButton", {targetId: hostButton.id});
           stateFlags["RGHostButton"] = true
         }
 
-        const startButton = getInteractableButton(tickInfo, "StartWithRGButton");
+        const startButton = await getInteractableButton("StartWithRGButton");
         if (startButton && stateFlags["SelectProfileButton"] && !stateFlags["StartWithRGButton"]) {
-          clickButton(startButton.id, actionQueue);
+          rg.performAction("ClickButton", {targetId: startButton.id});
           stateFlags["StartWithRGButton"] = true
         }
 
-        const selectProfileButton = getInteractableButton(tickInfo, "SelectProfileButton");
+        const selectProfileButton = await getInteractableButton("SelectProfileButton");
         if (selectProfileButton && stateFlags["ProfileMenuButton"] && !stateFlags["SelectProfileButton"]) {
-          clickButton(selectProfileButton.id, actionQueue);
+          rg.performAction("ClickButton", {targetId: selectProfileButton.id});
           stateFlags["SelectProfileButton"] = true
         }
 
-        const profileMenuButton = getInteractableButton(tickInfo, "ProfileMenuButton");
+        const profileMenuButton = await getInteractableButton("ProfileMenuButton");
         if (profileMenuButton && !stateFlags["ProfileMenuButton"]) {
-          clickButton(profileMenuButton.id, actionQueue);
+          rg.performAction("ClickButton", {targetId: profileMenuButton.id});
           stateFlags["ProfileMenuButton"] = true
         }
       }
@@ -69,17 +86,17 @@ export async function runTurn(playerId, tickInfo, mostRecentMatchInfo, actionQue
       break;
     case "CharSelect":
       if (playedGame) {
-        botComplete = true;
+        rg.complete()
       } else {
-        const readyButton = getInteractableButton(tickInfo, "ReadyButton");
+        const readyButton = await getInteractableButton("ReadyButton");
         if (readyButton && stateFlags["Seat7Button"] && !stateFlags["ReadyButton"]) {
-          clickButton(readyButton.id, actionQueue);
+          rg.performAction("ClickButton", {targetId: readyButton.id});
           stateFlags["ReadyButton"] = true
         }
 
-        const seat7Button = getInteractableButton(tickInfo, "Seat7Button");
+        const seat7Button = await getInteractableButton("Seat7Button");
         if (seat7Button && !stateFlags["Seat7Button"]) {
-          clickButton(seat7Button.id, actionQueue);
+          rg.performAction("ClickButton", {targetId: seat7Button.id});
           stateFlags["Seat7Button"] = true
         }
       }
@@ -88,15 +105,15 @@ export async function runTurn(playerId, tickInfo, mostRecentMatchInfo, actionQue
     case "BossRoom":
       playedGame = true;
 
-      const GameHUDStartButton = getInteractableButton(tickInfo, "GameHUDStartButton");
+      const GameHUDStartButton = await getInteractableButton("GameHUDStartButton");
       if (GameHUDStartButton && stateFlags["CheatsCancelButton"] && !stateFlags["GameHUDStartButton"]) {
-        clickButton(GameHUDStartButton.id, actionQueue);
+        rg.performAction("ClickButton", {targetId: GameHUDStartButton.id});
         stateFlags["GameHUDStartButton"] = true
       }
 
-      const CheatsCancelButton = getInteractableButton(tickInfo, "CheatsCancelButton");
+      const CheatsCancelButton = await getInteractableButton("CheatsCancelButton");
       if (CheatsCancelButton && !stateFlags["CheatsCancelButton"]) {
-        clickButton(CheatsCancelButton.id, actionQueue);
+        rg.performAction("ClickButton", {targetId: CheatsCancelButton.id});
         stateFlags["CheatsCancelButton"] = true
       }
 
@@ -104,58 +121,16 @@ export async function runTurn(playerId, tickInfo, mostRecentMatchInfo, actionQue
     case "PostGame":
     default:
       // teardown myself
-      console.log(`Game ended, bot is Complete`)
-      botComplete = true;
+      rg.complete()
       break;
   }
 
 }
 
-function getInteractableButton(tickInfo, buttonName) {
-  const buttons = RGBot.getEntitiesOfType(tickInfo, buttonName);
-  //console.log(`Found buttons: ${JSON.stringify(buttons)}`)
-  if (buttons && buttons.length > 0) {
-    const button = buttons[0];
-    if (button.interactable) {
-      //console.log(`Returning button: ${JSON.stringify(button)}`)
-      return button;
-    }
+async function getInteractableButton(buttonName) {
+  const button = await rg.getEntityOfType(buttonName);
+  if (await rg.entityHasAttribute(button, "interactable", true)) {
+    return button;
   }
   return null;
-}
-
-function clickButton(targetId, actionQueue) {
-  console.log(`Clicking button: ${targetId}`)
-  const input = {
-    targetId: targetId
-  }
-  actionQueue.queue("ClickButton", input)
-}
-
-/**
- * Defines the type of character that the game should use for this bot.
- */
-export function getCharacterType() {
-  return CharInfo.type[charType];
-}
-
-/**
- * Let server know if i have finished my processing
- * @returns {boolean} true if done processing and ready to be torn down
- */
-export function isComplete() {
-  return botComplete;
-}
-
-/**
-    One of ...
-    MANAGED - Server disconnects/ends bot on match/game-scene teardown
-    PERSISTENT - Bot is responsible for disconnecting / ending itself
- */
-export function getBotLifecycle() {
-  return 'PERSISTENT';
-}
-
-export function isSpawnable() {
-  return false;
 }
