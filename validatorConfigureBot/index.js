@@ -41,7 +41,7 @@ export async function configureBot(rgObject) {
   rg = rgObject;
 
   // validate we're on the main menu
-  rg.expect(rg.getState().sceneName).toEqual("MainMenu");
+  await rg.waitForScene("MainMenu");
 
   // get to the character select screen
   const profileMenuButton = await rg.findEntityByType("ProfileMenuButton");
@@ -62,7 +62,7 @@ export async function configureBot(rgObject) {
 
 
   // now we should be at character select
-  rg.expect(rg.getState().sceneName).toEqual("CharSelect");
+  await rg.waitForScene("CharSelect");
 
   // select a character and get to the game screen
   const seat7Button = await rg.findEntityByType("Seat7Button");
@@ -75,7 +75,8 @@ export async function configureBot(rgObject) {
 
 
   // we should be in the dungeon now
-  rg.expect(rg.getState().sceneName).toEqual("BossRoom");
+  await rg.waitForScene("BossRoom");
+
 
   // dismiss the help dialogs so we can start playing
   const cheatsCancelButton = await rg.findEntityByType("CheatsCancelButton");
