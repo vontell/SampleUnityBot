@@ -47,14 +47,22 @@ export async function configureBot(rgObject) {
   const profileMenuButton = await rg.findEntityByType("ProfileMenuButton");
   await rg.entityHasAttribute(profileMenuButton, "interactable", true);
   rg.performAction("ClickButton", {targetId: profileMenuButton.id});
+  // modal should be displayed now which overlaps this button
+  await rg.entityHasAttribute(profileMenuButton, "interactable", false); 
 
   const selectProfileButton = await rg.findEntityByType("SelectProfileButton");
   await rg.entityHasAttribute(selectProfileButton, "interactable", true);
   rg.performAction("ClickButton", {targetId: selectProfileButton.id});
+  // should dismiss modal, 
+  // which means this button is no longer visible and others are clickable again
+  await rg.entityDoesNotExist(selectProfileButton);
+  await rg.entityHasAttribute(profileMenuButton, "interactable", true);
 
   const startWithRGButton = await rg.findEntityByType("StartWithRGButton");
   await rg.entityHasAttribute(startWithRGButton, "interactable", true);
   rg.performAction("ClickButton", {targetId: startWithRGButton.id});
+  // modal should be displayed now which overlaps this button
+  await rg.entityHasAttribute(selectProfileButton, "interactable", false);
 
   const rgHostButton = await rg.findEntityByType("RGHostButton");
   await rg.entityHasAttribute(rgHostButton, "interactable", true);
@@ -86,8 +94,10 @@ export async function configureBot(rgObject) {
   await rg.entityHasAttribute(gameHUDStartButton, "interactable", true);
   rg.performAction("ClickButton", {targetId: gameHUDStartButton.id});
 
-  // HUD should have been dismissed
-  await rg.entityHasAttribute(gameHUDStartButton, "interactable", false);
+  // HUD should have been dismissed, 
+  // which means our buttons should also no longer be on the screen
+  await rg.entityDoesNotExist(cheatsCancelButton);
+  await rg.entityDoesNotExist(gameHUDStartButton);
 
 
   // we're done!
