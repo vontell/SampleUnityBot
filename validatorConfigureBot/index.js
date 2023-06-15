@@ -45,19 +45,19 @@ export async function configureBot(rgObject) {
 
   // get to the character select screen
   const profileMenuButton = await rg.findEntityByType("ProfileMenuButton");
-  rg.expect(profileMenuButton.interactable).toEqual(true);
+  await rg.entityHasAttribute(profileMenuButton, "interactable", true);
   rg.performAction("ClickButton", {targetId: profileMenuButton.id});
 
   const selectProfileButton = await rg.findEntityByType("SelectProfileButton");
-  rg.expect(selectProfileButton.interactable).toEqual(true);
+  await rg.entityHasAttribute(selectProfileButton, "interactable", true);
   rg.performAction("ClickButton", {targetId: selectProfileButton.id});
 
   const startWithRGButton = await rg.findEntityByType("StartWithRGButton");
-  rg.expect(startWithRGButton.interactable).toEqual(true);
+  await rg.entityHasAttribute(startWithRGButton, "interactable", true);
   rg.performAction("ClickButton", {targetId: startWithRGButton.id});
 
   const rgHostButton = await rg.findEntityByType("RGHostButton");
-  rg.expect(rgHostButton.interactable).toEqual(true);
+  await rg.entityHasAttribute(rgHostButton, "interactable", true);
   rg.performAction("ClickButton", {targetId: rgHostButton.id});
 
 
@@ -66,25 +66,24 @@ export async function configureBot(rgObject) {
 
   // select a character and get to the game screen
   const seat7Button = await rg.findEntityByType("Seat7Button");
-  rg.expect(seat7Button.interactable).toEqual(true);
+  await rg.entityHasAttribute(seat7Button, "interactable", true);
   rg.performAction("ClickButton", {targetId: seat7Button.id});
 
   const readyButton = await rg.findEntityByType("ReadyButton");
-  rg.expect(readyButton.interactable).toEqual(true);
+  await rg.entityHasAttribute(readyButton, "interactable", true);
   rg.performAction("ClickButton", {targetId: readyButton.id});
 
 
   // we should be in the dungeon now
   await rg.waitForScene("BossRoom");
 
-
   // dismiss the help dialogs so we can start playing
   const cheatsCancelButton = await rg.findEntityByType("CheatsCancelButton");
-  rg.expect(cheatsCancelButton.interactable).toEqual(true);
+  await rg.entityHasAttribute(cheatsCancelButton, "interactable", true);
   rg.performAction("ClickButton", {targetId: cheatsCancelButton.id});
 
   const gameHUDStartButton = await rg.findEntityByType("GameHUDStartButton");
-  rg.expect(gameHUDStartButton.interactable).toEqual(true);
+  await rg.entityHasAttribute(gameHUDStartButton, "interactable", true);
   rg.performAction("ClickButton", {targetId: gameHUDStartButton.id});
 
 
