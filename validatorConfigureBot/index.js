@@ -69,7 +69,7 @@ export async function configureBot(rgObject) {
   rg.expect(seat7Button.interactable).toEqual(true);
   rg.performAction("ClickButton", {targetId: seat7Button.id});
 
-  const readyButton = await rg.findEntityByType("Seat7Button");
+  const readyButton = await rg.findEntityByType("ReadyButton");
   rg.expect(readyButton.interactable).toEqual(true);
   rg.performAction("ClickButton", {targetId: readyButton.id});
 
