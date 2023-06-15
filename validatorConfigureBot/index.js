@@ -47,22 +47,14 @@ export async function configureBot(rgObject) {
   const profileMenuButton = await rg.findEntityByType("ProfileMenuButton");
   await rg.entityHasAttribute(profileMenuButton, "interactable", true);
   rg.performAction("ClickButton", {targetId: profileMenuButton.id});
-  // modal should be displayed now which overlaps this button
-  await rg.entityHasAttribute(profileMenuButton, "interactable", false); 
 
   const selectProfileButton = await rg.findEntityByType("SelectProfileButton");
   await rg.entityHasAttribute(selectProfileButton, "interactable", true);
   rg.performAction("ClickButton", {targetId: selectProfileButton.id});
-  // should dismiss modal, 
-  // which means this button is no longer visible and others are clickable again
-  await rg.entityDoesNotExist(selectProfileButton);
-  await rg.entityHasAttribute(profileMenuButton, "interactable", true);
 
   const startWithRGButton = await rg.findEntityByType("StartWithRGButton");
   await rg.entityHasAttribute(startWithRGButton, "interactable", true);
   rg.performAction("ClickButton", {targetId: startWithRGButton.id});
-  // modal should be displayed now which overlaps this button
-  await rg.entityHasAttribute(selectProfileButton, "interactable", false);
 
   const rgHostButton = await rg.findEntityByType("RGHostButton");
   await rg.entityHasAttribute(rgHostButton, "interactable", true);
@@ -70,6 +62,10 @@ export async function configureBot(rgObject) {
 
 
   // now we should be at character select
+  await rg.entityDoesNotExist(profileMenuButton);
+  await rg.entityDoesNotExist(selectProfileButton);
+  await rg.entityDoesNotExist(startWithRGButton);
+  await rg.entityDoesNotExist(rgHostButton);
   await rg.waitForScene("CharSelect");
 
   // select a character and get to the game screen
@@ -83,6 +79,8 @@ export async function configureBot(rgObject) {
 
 
   // we should be in the dungeon now
+  await rg.entityDoesNotExist(seat7Button);
+  await rg.entityDoesNotExist(readyButton);
   await rg.waitForScene("BossRoom");
 
   // dismiss the help dialogs so we can start playing
