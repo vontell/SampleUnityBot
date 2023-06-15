@@ -1,18 +1,47 @@
 import { CharInfo } from "../bossroom";
-import Validator from "./validator";
 
-let charType = 1; // fixed to rogue character
-let rg;
+let rg = null;
 
-export async function configureBot(bot) {
+/**
+ * Defines the type of character that the game should use for this bot.
+ */
+ export function getCharacterType() {
+  return CharInfo.type[1]; // fixed to rogue character
+}
 
-  console.log("hello?");
+/**
+    One of ...
+    MANAGED - Server disconnects/ends bot on match/game-scene teardown
+    PERSISTENT - Bot is responsible for disconnecting / ending itself
+ */
+export function getBotLifecycle() {
+  return 'PERSISTENT';
+}
 
-  rg = new Validator(bot)
+/**
+ * @returns {boolean} true if I'm an in-game character, or false if I'm an invisible navigator/observer/etc.
+ */
+export function isSpawnable() {
+  return false;
+}
+
+/**
+ * Let server know if I have finished my processing
+ * @returns {boolean} true if done processing and ready to be torn down
+ */
+ export function isComplete() {
+  return rg ? rg.isComplete() : false;
+}
+
+/**
+ * Start running my test scenario
+ */
+export async function configureBot(rgObject) {
+
+  rg = rgObject;
 
   // validate we're on the main menu
-  const scene = await rg.getSceneName();
-  rg.expect(scene).toEqual("MainMenu");
+  rg.expect(rg.getState().sceneName).toEqual("MainMenu");
 
   // get to the character select screen
   const profileMenuButton = await rg.findEntityByType("ProfileMenuButton");
@@ -33,7 +62,7 @@ export async function configureBot(bot) {
 
 
   // now we should be at character select
-  rg.expect(rg.state().sceneName).toEqual("CharSelect");
+  rg.expect(rg.getState().sceneName).toEqual("CharSelect");
 
   // select a character and get to the game screen
   const seat7Button = await rg.findEntityByType("Seat7Button");
@@ -46,7 +75,7 @@ export async function configureBot(bot) {
 
 
   // we should be in the dungeon now
-  rg.expect(rg.state().sceneName).toEqual("BossRoom");
+  rg.expect(rg.getState().sceneName).toEqual("BossRoom");
 
   // dismiss the help dialogs so we can start playing
   const cheatsCancelButton = await rg.findEntityByType("CheatsCancelButton");
@@ -60,32 +89,4 @@ export async function configureBot(bot) {
 
   // we're done!
   rg.complete()
-}
-
-/**
- * Let server know if i have finished my processing
- * @returns {boolean} true if done processing and ready to be torn down
- */
- export function isComplete() {
-  return rg ? rg.isComplete() : false;
-}
-
-/**
- * Defines the type of character that the game should use for this bot.
- */
-export function getCharacterType() {
-  return CharInfo.type[charType];
-}
-
-/**
-    One of ...
-    MANAGED - Server disconnects/ends bot on match/game-scene teardown
-    PERSISTENT - Bot is responsible for disconnecting / ending itself
- */
-export function getBotLifecycle() {
-  return 'PERSISTENT';
-}
-
-export function isSpawnable() {
-  return false;
 }
