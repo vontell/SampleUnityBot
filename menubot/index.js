@@ -128,7 +128,7 @@ export async function runTurn(rgObject) {
 }
 
 async function getInteractableButton(buttonName) {
-  const button = await rg.findEntityOfType(buttonName);
+  const button = await rg.findEntityByType(buttonName);
   if (await rg.entityHasAttribute(button, "interactable", true)) {
     return button;
   }
