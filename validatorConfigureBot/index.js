@@ -86,6 +86,9 @@ export async function configureBot(rgObject) {
   await rg.entityHasAttribute(gameHUDStartButton, "interactable", true);
   rg.performAction("ClickButton", {targetId: gameHUDStartButton.id});
 
+  // HUD should have been dismissed
+  await rg.entityHasAttribute(gameHUDStartButton, "interactable", false);
+
 
   // we're done!
   rg.complete()
