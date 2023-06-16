@@ -36,12 +36,12 @@ export function isComplete() {
 
 // flags for clicking the 6 buttons we need to click to start the game
 let stateFlags = {
-  "RGHostButton":false,
-  "StartWithRGButton":false,
-  "SelectProfileButton":false,
-  "ProfileMenuButton":false,
-  "ReadyButton":false,
-  "Seat7Button":false,
+  "RGHostButton": false,
+  "StartWithRGButton": false,
+  "SelectProfileButton": false,
+  "ProfileMenuButton": false,
+  "ReadyButton": false,
+  "Seat7Button": false,
 }
 
 let playedGame = false;

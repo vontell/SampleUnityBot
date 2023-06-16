@@ -39,6 +39,7 @@ export function isSpawnable() {
 export async function configureBot(rgObject) {
 
   rg = rgObject;
+  rg.automatedTestMode = true;
 
   // validate we're on the main menu
   await rg.waitForScene("MainMenu");
