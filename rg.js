@@ -1,16 +1,3 @@
-
-export const RGBot = {
-
-    getEntitiesOnTeam: (tickInfo, team) => {
-        return Object.values(tickInfo.gameState).filter(e => e.team === team);
-    },
-
-    getEntitiesOfType: (tickInfo, type) => {
-        return Object.values(tickInfo.gameState).filter(e => e.type === type);
-    }
-
-}
-
 /**
  * Allows a bot to define a set of specifications for bot behavior.
  * The validator queues up a test that needs to validate before the
@@ -51,10 +38,4 @@ export class RGValidator {
         }
     }
 
-}
-
-export const MathFunctions = {
-    distanceSq: (position1, position2) => {
-        return Math.pow(position2.x - position1.x, 2) + Math.pow(position2.y - position1.y, 2) + Math.pow(position2.z - position1.z, 2);
-    }
 }

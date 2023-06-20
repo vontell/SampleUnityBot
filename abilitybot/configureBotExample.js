@@ -39,8 +39,7 @@ export async function configureBot(rg) {
     while(rg.getState(enemy.id)) {
 
         // const originalEnemyHealth = rg.getState(enemy.id).health;
-       
-      
+    
         // perform an attack
         rg.performAction("PerformSkill", {
             skillId: skillId,

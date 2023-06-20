@@ -1,4 +1,4 @@
-import {MathFunctions, RGBot} from "./rg";
+import { MathFunctions, RGBot} from "./rg";
 
 
 export const CharInfo = {
@@ -7,56 +7,57 @@ export const CharInfo = {
     abilities: [[0,1], [0,1,2], [0,1], [0,1,2]],
     // teamId
     abilityTargets: [[1,0], [1,1,-1], [1,-1], [1,1,1]]
-
 }
 
 export const BossRoomBot = {
 
-    getEnemies: (tickInfo) => {
-        return RGBot.getEntitiesOnTeam(tickInfo, 1).filter(entry => !entry.broken);
+    getEntitiesOnTeam: (rg, team) => {
+        return Object.values(rg.getState().gameState).filter(e => e.team === team);
     },
 
-    getAllies: (tickInfo) => {
-        return RGBot.getEntitiesOnTeam(tickInfo, 0);
+    getEnemies: (rg) => {
+        return getEntitiesOnTeam(rg, 1).filter(entry => !entry.broken);
     },
 
-    getEnemy: (tickInfo, id) => {
-        return RGBot.getEntitiesOnTeam(tickInfo, 1).find(entry => entry.id == id);
+    getAllies: (rg) => {
+        return getEntitiesOnTeam(rg, 0);
     },
 
-    getAlly: (tickInfo, id) => {
-        return RGBot.getEntitiesOnTeam(tickInfo, 0).find(entry => entry.id == id);
+    getEnemy: (rg, id) => {
+        return getEntitiesOnTeam(rg, 1).find(entry => entry.id == id);
     },
 
-    nearestEnemy: (tickInfo, position) => {
-        return RGBot.getEntitiesOnTeam(tickInfo, 1).filter(entry => !entry.broken).sort((a,b) => MathFunctions.distanceSq(position, a.position) - MathFunctions.distanceSq(position, b.position)).find(() => true);
+    getAlly: (rg, id) => {
+        return getEntitiesOnTeam(rg, 0).find(entry => entry.id == id);
     },
 
-    getDoorSwitch: (tickInfo) => {
-        return RGBot.getEntitiesOfType(tickInfo, "FloorSwitch")[0];
+    nearestEnemy: (rg) => {
+        const position = rg.getBot().position;
+        return getEntitiesOnTeam(rg, 1).filter(entry => !entry.broken).sort((a,b) => rg.MathFunctions.distanceSq(position, a.position) - rg.MathFunctions.distanceSq(position, b.position)).find(() => true);
     },
 
-    getHumans: (tickInfo) => {
-        return RGBot.getEntitiesOfType(tickInfo, "HumanPlayer");
+    getDoorSwitch: (rg) => {
+        return rg.findEntity("FloorSwitch");
     },
 
-    startAbility: (ability, position, targetId, actionQueue) => {
-        const input = {
+    getHumans: (rg) => {
+        return rg.findEntities("HumanPlayer");
+    },
+
+    startAbility: (ability, position, targetId, rg) => {
+        rg.performAction("PerformSkill", {
             skillId: ability,
             targetId: targetId,
             xPosition: position != null ? position.x : null,
             yPosition: position != null ? position.y : null,
             zPosition: position != null ? position.z : null
-        }
-        // console.log(`Using ability ${ability} on targetId: ${targetId} at position: ${input.xPosition}, ${input.yPosition}, ${input.zPosition}`)
-        actionQueue.queue("PerformSkill", input)
+        });
     },
 
-    followObject: (target, range, actionQueue) => {
-        const input = {
+    followObject: (target, range, rg) => {
+        rg.performAction("FollowObject", {
             targetId: target.id,
             range: range
-        }
-        actionQueue.queue("FollowObject", input)
+        })
     }
 }
