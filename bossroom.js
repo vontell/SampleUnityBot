@@ -1,5 +1,3 @@
-import { MathFunctions, RGBot} from "./rg";
-
 
 export const CharInfo = {
 
