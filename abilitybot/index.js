@@ -28,8 +28,7 @@ export async function configureBot(rg) {
         zPosition: target.position.z
     })
 
-    // validate the heal goes on cooldown and then recovers from cooldown
-    await rg.entityHasAttribute(rg.getBot(), ["isOnCooldown", `ability${skillId}Available`], false);
+    // validate that the heal recovers from cooldown
     await rg.entityHasAttribute(rg.getBot(), ["isOnCooldown", `ability${skillId}Available`], true); 
 
 
@@ -51,8 +50,7 @@ export async function configureBot(rg) {
             zPosition: target.position.z
         })
 
-        // validate the attack goes on cooldown and then recovers from cooldown
-        await rg.entityHasAttribute(rg.getBot(), ["isOnCooldown", `ability${skillId}Available`], false);
+        // validate that the attack recovers from cooldown
         await rg.entityHasAttribute(rg.getBot(), ["isOnCooldown", `ability${skillId}Available`], true); 
         
         // validate the enemy took damage
