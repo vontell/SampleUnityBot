@@ -40,8 +40,6 @@ async function selectAbility() {
 
   // Select an ability
   const abilities = CharInfo.abilities[charType];
-  console.log("ABILITIES WERE", JSON.stringify(CharInfo.abilities))
-
   const abilityIndex = CURRENT_ABILITY % abilities.length;
   const ability = abilities[abilityIndex];
   const targetType = CharInfo.abilityTargets[charType][abilityIndex]
@@ -69,7 +67,8 @@ async function selectAbility() {
     }
   } else {
     // Otherwise, this ability requires an ally - select a random one.
-    currentTarget = BossRoomBot.getAllies(rg)[Math.floor(Math.random() * allies.length)];
+    const allies = BossRoomBot.getAllies(rg);
+    currentTarget = allies[Math.floor(Math.random() * allies.length)];
   }
 
   BossRoomBot.startAbility(ability, currentTarget?.position, currentTarget?.id, rg);
