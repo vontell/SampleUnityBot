@@ -9,9 +9,9 @@ let charType = Math.round(Math.random() * 1000000) % 4;
   return CharInfo.type[charType];
 }
 
-export function configureBot(characterType) {
+export function configureBot(rgObject) {
   console.log(`Unity bot configureBot function called, charType: ${charType} - characterType: ${characterType}`);
-  charType = CharInfo.type.indexOf(characterType);
+  charType = CharInfo.type.indexOf(rg.characterType);
 }
 
 let rg = null;
