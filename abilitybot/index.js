@@ -1,10 +1,12 @@
 import { CharInfo } from "../bossroom";
 
+let charType = 0; // Healer
+
 /**
  * Defines the type of character that the game should use for this bot.
  */
 export function getCharacterType() {
-    return CharInfo.type[0]; // Healer
+    return CharInfo.type[charType]; 
 }
 
 export async function configureBot(rg) {
@@ -17,7 +19,7 @@ export async function configureBot(rg) {
     const target = await rg.findNearestEntity("HumanPlayer");
     await rg.entityExists(target);
 
-    let skillId = CharInfo.abilities[rg.characterType][1]
+    let skillId = CharInfo.abilities[charType][1]
     rg.performAction("PerformSkill", {
         skillId: skillId,
         targetId: target.id,
@@ -35,7 +37,7 @@ export async function configureBot(rg) {
     target = await rg.findNearestEntity("Imp");
     await rg.entityExists(enemy);
 
-    skillId = CharInfo.abilities[rg.characterType][0];
+    skillId = CharInfo.abilities[charType][0];
     while(rg.getState(enemy.id)) {
 
         // const originalEnemyHealth = rg.getState(enemy.id).health;
