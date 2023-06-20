@@ -35,10 +35,10 @@ export async function configureBot(rg) {
 
     // find the closest enemy and use the basic attack until it dies
     target = await rg.findNearestEntity("Imp");
-    await rg.entityExists(enemy);
+    await rg.entityExists(target);
 
     skillId = CharInfo.abilities[charType][0];
-    while(rg.getState(enemy.id)) {
+    while(rg.getState(target.id)) {
 
         // const originalEnemyHealth = rg.getState(enemy.id).health;
     
