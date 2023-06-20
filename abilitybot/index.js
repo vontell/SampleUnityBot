@@ -41,6 +41,8 @@ async function selectAbility() {
 
   // Select an ability
   const abilities = CharInfo.abilities[charType];
+  console.log("ABILITIES WERE", abilities)
+
   const abilityIndex = CURRENT_ABILITY % abilities.length;
   const ability = abilities[abilityIndex];
   const targetType = CharInfo.abilityTargets[charType][abilityIndex]
