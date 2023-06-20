@@ -7,42 +7,42 @@ export const CharInfo = {
     abilityTargets: [[1,0], [1,1,-1], [1,-1], [1,1,1]]
 }
 
-export const BossRoomBot = {
+export class BossRoomBot {
 
-    getEntitiesOnTeam: (rg, team) => {
+    static getEntitiesOnTeam(rg, team) {
         return Object.values(rg.getState().gameState).filter(e => e.team === team);
-    },
+    };
 
-    getEnemies: (rg) => {
-        return getEntitiesOnTeam(rg, 1).filter(entry => !entry.broken);
-    },
+    static getEnemies(rg) {
+        return this.getEntitiesOnTeam(rg, 1).filter(entry => !entry.broken);
+    };
 
-    getAllies: (rg) => {
-        return getEntitiesOnTeam(rg, 0);
-    },
+    static getAllies(rg) {
+        return this.getEntitiesOnTeam(rg, 0);
+    };
 
-    getEnemy: (rg, id) => {
-        return getEntitiesOnTeam(rg, 1).find(entry => entry.id == id);
-    },
+    static getEnemy(rg, id) {
+        return this.getEntitiesOnTeam(rg, 1).find(entry => entry.id == id);
+    };
 
-    getAlly: (rg, id) => {
-        return getEntitiesOnTeam(rg, 0).find(entry => entry.id == id);
-    },
+    static getAlly(rg, id) {
+        return this.getEntitiesOnTeam(rg, 0).find(entry => entry.id == id);
+    };
 
-    nearestEnemy: (rg) => {
+    static nearestEnemy(rg) {
         const position = rg.getBot().position;
-        return getEntitiesOnTeam(rg, 1).filter(entry => !entry.broken).sort((a,b) => rg.MathFunctions.distanceSq(position, a.position) - rg.MathFunctions.distanceSq(position, b.position)).find(() => true);
-    },
+        return this.getEntitiesOnTeam(rg, 1).filter(entry => !entry.broken).sort((a,b) => rg.MathFunctions.distanceSq(position, a.position) - rg.MathFunctions.distanceSq(position, b.position)).find(() => true);
+    };
 
-    getDoorSwitch: (rg) => {
+    static getDoorSwitch(rg) {
         return rg.findEntity("FloorSwitch");
-    },
+    };
 
-    getHumans: (rg) => {
+    static getHumans(rg) {
         return rg.findEntities("HumanPlayer");
-    },
+    };
 
-    startAbility: (ability, position, targetId, rg) => {
+    static startAbility(ability, position, targetId, rg) {
         rg.performAction("PerformSkill", {
             skillId: ability,
             targetId: targetId,
@@ -50,12 +50,12 @@ export const BossRoomBot = {
             yPosition: position != null ? position.y : null,
             zPosition: position != null ? position.z : null
         });
-    },
+    };
 
-    followObject: (target, range, rg) => {
+    static followObject(target, range, rg) {
         rg.performAction("FollowObject", {
             targetId: target.id,
             range: range
         })
-    }
+    };
 }
