@@ -16,7 +16,7 @@ export async function configureBot(rg) {
     await rg.waitForScene("BossRoom");
 
     // find the closest human player and use a heal ability on them
-    const target = await rg.findNearestEntity("HumanPlayer");
+    let target = await rg.findNearestEntity("HumanPlayer");
     await rg.entityExists(target);
 
     let skillId = CharInfo.abilities[charType][1]
