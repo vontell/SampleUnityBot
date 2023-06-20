@@ -4,7 +4,7 @@ import { CharInfo } from "../bossroom";
  * Defines the type of character that the game should use for this bot.
  */
 export function getCharacterType() {
-    return CharInfo.type[4]; // Healer
+    return CharInfo.type[1]; // Healer
 }
 
 export async function configureBot(rg) {
