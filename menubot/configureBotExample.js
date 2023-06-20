@@ -45,19 +45,19 @@ export async function configureBot(rgObject) {
   await rg.waitForScene("MainMenu");
 
   // get to the character select screen
-  const profileMenuButton = await rg.findEntityByType("ProfileMenuButton");
+  const profileMenuButton = await rg.findEntity("ProfileMenuButton");
   await rg.entityHasAttribute(profileMenuButton, "interactable", true);
   rg.performAction("ClickButton", {targetId: profileMenuButton.id});
 
-  const selectProfileButton = await rg.findEntityByType("SelectProfileButton");
+  const selectProfileButton = await rg.findEntity("SelectProfileButton");
   await rg.entityHasAttribute(selectProfileButton, "interactable", true);
   rg.performAction("ClickButton", {targetId: selectProfileButton.id});
 
-  const startWithRGButton = await rg.findEntityByType("StartWithRGButton");
+  const startWithRGButton = await rg.findEntity("StartWithRGButton");
   await rg.entityHasAttribute(startWithRGButton, "interactable", true);
   rg.performAction("ClickButton", {targetId: startWithRGButton.id});
 
-  const rgHostButton = await rg.findEntityByType("RGHostButton");
+  const rgHostButton = await rg.findEntity("RGHostButton");
   await rg.entityHasAttribute(rgHostButton, "interactable", true);
   rg.performAction("ClickButton", {targetId: rgHostButton.id});
 
@@ -70,11 +70,11 @@ export async function configureBot(rgObject) {
   await rg.waitForScene("CharSelect");
 
   // select a character and get to the game screen
-  const seat7Button = await rg.findEntityByType("Seat7Button");
+  const seat7Button = await rg.findEntity("Seat7Button");
   await rg.entityHasAttribute(seat7Button, "interactable", true);
   rg.performAction("ClickButton", {targetId: seat7Button.id});
 
-  const readyButton = await rg.findEntityByType("ReadyButton");
+  const readyButton = await rg.findEntity("ReadyButton");
   await rg.entityHasAttribute(readyButton, "interactable", true);
   rg.performAction("ClickButton", {targetId: readyButton.id});
 
@@ -85,11 +85,11 @@ export async function configureBot(rgObject) {
   await rg.waitForScene("BossRoom");
 
   // dismiss the help dialogs so we can start playing
-  const cheatsCancelButton = await rg.findEntityByType("CheatsCancelButton");
+  const cheatsCancelButton = await rg.findEntity("CheatsCancelButton");
   await rg.entityHasAttribute(cheatsCancelButton, "interactable", true);
   rg.performAction("ClickButton", {targetId: cheatsCancelButton.id});
 
-  const gameHUDStartButton = await rg.findEntityByType("GameHUDStartButton");
+  const gameHUDStartButton = await rg.findEntity("GameHUDStartButton");
   await rg.entityHasAttribute(gameHUDStartButton, "interactable", true);
   rg.performAction("ClickButton", {targetId: gameHUDStartButton.id});
 
