@@ -1,77 +1,65 @@
-import { BossRoomBot, CharInfo } from "../bossroom";
-
-let charType = Math.round(Math.random() * 1000000) % 4;
+import { CharInfo } from "../bossroom";
 
 /**
  * Defines the type of character that the game should use for this bot.
  */
- export function getCharacterType() {
-  return CharInfo.type[charType];
+export function getCharacterType() {
+    return CharInfo.type[4]; // Healer
 }
 
-export function configureBot(rgObject) {
-  console.log(`Unity bot configureBot function called, charType: ${charType} - characterType: ${rgObject.characterType}`);
-  charType = CharInfo.type.indexOf(rgObject.characterType);
-}
+export async function configureBot(rg) {
+    rg.automatedTestMode = true;
 
-let rg = null;
+    // validate that we're in the game
+    await rg.waitForScene("BossRoom");
 
-let CURRENT_ABILITY = 0;
+    // find the closest human player and use a heal ability on them
+    const target = await rg.findNearestEntity("HumanPlayer");
+    await rg.entityExists(target);
 
-let lastEnemyId = -1;
+    let skillId = CharInfo.abilities[rg.characterType][1]
+    rg.performAction("PerformSkill", {
+        skillId: skillId,
+        targetId: target.id,
+        xPosition: target.position.x,
+        yPosition: target.position.y,
+        zPosition: target.position.z
+    })
 
-export async function runTurn(rgObject) {
+    // validate the heal goes on cooldown and then recovers from cooldown
+    await rg.entityHasAttribute(rg.getBot(), ["isOnCooldown", `ability${skillId}Available`], false);
+    await rg.entityHasAttribute(rg.getBot(), ["isOnCooldown", `ability${skillId}Available`], true); 
 
-  rg = rgObject;
 
-  if (rg.getState().sceneName === "BossRoom") {
+    // find the closest enemy and use the basic attack until it dies
+    target = await rg.findNearestEntity("Imp");
+    await rg.entityExists(enemy);
 
-    // select 1 ability per update
-    await selectAbility();
+    skillId = CharInfo.abilities[rg.characterType][0];
+    while(rg.getState(enemy.id)) {
 
-    // TODO: Add script sensors to the door and button so that a bot can walk to a button if door not open
-  }
-}
+        // const originalEnemyHealth = rg.getState(enemy.id).health;
+    
+        // perform an attack
+        rg.performAction("PerformSkill", {
+            skillId: skillId,
+            targetId: target.id,
+            xPosition: target.position.x,
+            yPosition: target.position.y,
+            zPosition: target.position.z
+        })
 
-/**
- * Selects an ability for this character, and queues that action.
- */
-async function selectAbility() {
-
-  // Select an ability
-  const abilities = CharInfo.abilities[charType];
-  const abilityIndex = CURRENT_ABILITY % abilities.length;
-  const ability = abilities[abilityIndex];
-  const targetType = CharInfo.abilityTargets[charType][abilityIndex]
-
-  if(!rg.entityHasAttribute(rg.getBot(), ["isOnCooldown", `ability${ability}Available`], true)) {
-    return;
-  }
-
-  let currentTarget;
-
-  if(targetType === -1) 
-  {
-    currentTarget = null;
-  } 
-  else if (targetType === 1) {
-    // The ability requires an enemy.
-    // Select the most recently referenced enemy or the nearest enemy.
-    let randomEnemy = BossRoomBot.nearestEnemy(rg);
-    if (randomEnemy) {
-      currentTarget = randomEnemy;
-      lastEnemyId = randomEnemy.id;
-    } else {
-      lastEnemyId = -1;
-      return;
+        // validate the attack goes on cooldown and then recovers from cooldown
+        await rg.entityHasAttribute(rg.getBot(), ["isOnCooldown", `ability${skillId}Available`], false);
+        await rg.entityHasAttribute(rg.getBot(), ["isOnCooldown", `ability${skillId}Available`], true); 
+        
+        // validate the enemy took damage
+        // TODO figure out how to do this
+        // const newHealth = rg.getState(enemy.id).health;
+        // rgValidator.validate(`[${charName}] Damage Given - Offense Ability #` + ability, t + 1000, (newTick) => {
+        //     const enemyState = BossRoomBot.getEnemy(newTick, randomEnemy.id);
+        //     return !enemyState || enemyState.health < originalHealth;
+        //   });
     }
-  } else {
-    // Otherwise, this ability requires an ally - select a random one.
-    const allies = BossRoomBot.getAllies(rg);
-    currentTarget = allies[Math.floor(Math.random() * allies.length)];
-  }
-
-  BossRoomBot.startAbility(ability, currentTarget?.position, currentTarget?.id, rg);
-  CURRENT_ABILITY++;
 
 }
