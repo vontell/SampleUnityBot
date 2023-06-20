@@ -1,5 +1,4 @@
-import {BossRoomBot, CharInfo} from "../bossroom";
-import {RGValidator} from "../rg";
+import { BossRoomBot, CharInfo } from "../bossroom";
 
 let charType = Math.round(Math.random() * 1000000) % 4;
 
@@ -41,7 +40,7 @@ async function selectAbility() {
 
   // Select an ability
   const abilities = CharInfo.abilities[charType];
-  console.log("ABILITIES WERE", abilities)
+  console.log("ABILITIES WERE", JSON.stringify(CharInfo.abilities))
 
   const abilityIndex = CURRENT_ABILITY % abilities.length;
   const ability = abilities[abilityIndex];
