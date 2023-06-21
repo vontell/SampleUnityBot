@@ -68,9 +68,6 @@ export async function configureBot(rgObject) {
         range: 5,
     });
 
-    // validate that it is within certain range
-    // rg.distanceLessThan(rg.getBot(), target, 6);
-
     // queue three attacks
     // each one should do 5 damage
     skillId = CharInfo.abilities[charType][0];
