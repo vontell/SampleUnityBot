@@ -38,10 +38,31 @@ export async function configureBot(rg) {
     target = await rg.findNearestEntity("Imp", { x: -0.9, y: -100.0, z: 30.0 });
     await rg.entityExists(target);
 
+    // approach the entity
+    rg.performAction("FollowObject", {
+        targetId: target.id,
+        range: 5,
+    });
+
+    // validate that it is within certain range
+    // rg.distanceLessThan(rg.getBot(), target, 6);
+
+    // queue three attacks
+    // const args = {
+    //     skillId: skillId,
+    //     targetId: target.id,
+    //     xPosition: target.position.x,
+    //     yPosition: target.position.y,
+    //     zPosition: target.position.z
+    // }
+    // rg.performAction("PerformSkill", args)
+    // rg.performAction("PerformSkill", args)
+    // rg.performAction("PerformSkill", args)
+
     skillId = CharInfo.abilities[charType][0];
     while(rg.getState(target.id)) {
 
-        // const originalEnemyHealth = rg.getState(enemy.id).health;
+        const originalEnemyHealth = rg.getState(enemy.id).health;
     
         // perform an attack
         rg.performAction("PerformSkill", {
@@ -53,8 +74,8 @@ export async function configureBot(rg) {
         })
 
         // validate that the attack recovers from cooldown
-        await rg.entityHasAttribute(rg.getBot(), ["isOnCooldown", `ability${skillId}Available`], true); 
-        
+        await rg.entityHasAttribute(target, "health", originalEnemyHealth - 30);
+    
         // validate the enemy took damage
         // TODO figure out how to do this
         // const newHealth = rg.getState(enemy.id).health;
@@ -63,5 +84,6 @@ export async function configureBot(rg) {
         //     return !enemyState || enemyState.health < originalHealth;
         //   });
     }
+    await rg.entityDoesNotExist(target);
 
 }
