@@ -1,4 +1,4 @@
-import { BossRoomBot, CharInfo } from "../bossroom";
+import { CharInfo } from "../bossroom";
 
 let charType = Math.round(Math.random() * 1000000) % 4;
 
