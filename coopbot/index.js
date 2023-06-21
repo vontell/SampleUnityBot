@@ -43,7 +43,7 @@ export async function runTurn(rg) {
 
   // if the bot is not near the human player, then move within range of that player
   const humanPlayer = await rg.findEntity("HumanPlayer");
-  if(humanPlayer && rg.MathFunctions.distanceSq(currentPosition, humanPlayer.position) > 10 ) {
+  if(humanPlayer && rg.MathFunctions.distanceSq(currentPosition, humanPlayer.position) > 20 ) {
     rg.performAction("FollowObject", {
       targetId: humanPlayer.id,
       range: 2
