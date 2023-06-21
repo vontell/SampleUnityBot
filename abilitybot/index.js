@@ -43,7 +43,7 @@ async function selectAbility() {
   const abilityIndex = CURRENT_ABILITY % abilities.length;
   const ability = abilities[abilityIndex];
 
-  if(!rg.entityHasAttribute(rg.getBot(), ["isOnCooldown", `ability${ability}Available`], true)) {
+  if(!rg.entityHasAttribute(rg.getBot(), ["isOnCooldown", `ability${ability + 1}Available`], true)) {
     return;
   }
 
@@ -57,7 +57,7 @@ async function selectAbility() {
   else if (targetType === 1) {
     // The ability requires an enemy.
     // Select the most recently referenced enemy or the nearest enemy.
-    const randomEnemy = rg.findNearestEntity(null, null, (entity) => entity.team === 1 && !entity.broken )
+    const randomEnemy = rg.findNearestEntity(null, null, (entity) => { return entity.team === 1 && !entity.broken } )
     console.log(JSON.stringify(randomEnemy))
     
     if (randomEnemy) {
