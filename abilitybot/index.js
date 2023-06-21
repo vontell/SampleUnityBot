@@ -1,6 +1,8 @@
 import { CharInfo } from "../bossroom";
 
 let charType = 0; // Healer
+let rg = null;
+
 
 /**
  * Defines the type of character that the game should use for this bot.
@@ -9,7 +11,12 @@ export function getCharacterType() {
     return CharInfo.type[charType]; 
 }
 
-export async function configureBot(rg) {
+export function isComplete() {
+    return rg ? rg.isComplete : false;
+}
+
+export async function configureBot(rgObject) {
+    rg = rgObject;
     rg.automatedTestMode = true;
 
     // validate that we're in the game
@@ -48,42 +55,23 @@ export async function configureBot(rg) {
     // rg.distanceLessThan(rg.getBot(), target, 6);
 
     // queue three attacks
-    // const args = {
-    //     skillId: skillId,
-    //     targetId: target.id,
-    //     xPosition: target.position.x,
-    //     yPosition: target.position.y,
-    //     zPosition: target.position.z
-    // }
-    // rg.performAction("PerformSkill", args)
-    // rg.performAction("PerformSkill", args)
-    // rg.performAction("PerformSkill", args)
-
+    // each one should do 5 damage
     skillId = CharInfo.abilities[charType][0];
-    while(rg.getState(target.id)) {
-
-        const originalEnemyHealth = rg.getState(target.id).health;
-    
-        // perform an attack
-        rg.performAction("PerformSkill", {
-            skillId: skillId,
-            targetId: target.id,
-            xPosition: target.position.x,
-            yPosition: target.position.y,
-            zPosition: target.position.z
-        })
-
-        // validate that the attack recovers from cooldown
-        await rg.entityHasAttribute(target, "health", originalEnemyHealth - 30);
-    
-        // validate the enemy took damage
-        // TODO figure out how to do this
-        // const newHealth = rg.getState(enemy.id).health;
-        // rgValidator.validate(`[${charName}] Damage Given - Offense Ability #` + ability, t + 1000, (newTick) => {
-        //     const enemyState = BossRoomBot.getEnemy(newTick, randomEnemy.id);
-        //     return !enemyState || enemyState.health < originalHealth;
-        //   });
+    const args = {
+        skillId: skillId,
+        targetId: target.id,
+        xPosition: target.position.x,
+        yPosition: target.position.y,
+        zPosition: target.position.z
     }
+    rg.performAction("PerformSkill", args)
+    await rg.entityHasAttribute(target, "health", originalEnemyHealth - 10);
+
+    rg.performAction("PerformSkill", args)
+    await rg.entityHasAttribute(target, "health", originalEnemyHealth - 5);
+
+    rg.performAction("PerformSkill", args)
     await rg.entityDoesNotExist(target);
 
+    rg.complete();
 }
