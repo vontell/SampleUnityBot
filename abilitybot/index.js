@@ -1,94 +1,83 @@
-import { CharInfo } from "../bossroom";
+import { BossRoomBot, CharInfo } from "../bossroom";
 
-let charType = 0; // Healer
-let rg = null;
-
+let charType = Math.round(Math.random() * 1000000) % 4;
 
 /**
  * Defines the type of character that the game should use for this bot.
  */
-export function getCharacterType() {
-    return CharInfo.type[charType]; 
+ export function getCharacterType() {
+  return CharInfo.type[charType];
+}
+
+export function configureBot(rgObject) {
+  console.log(`Unity bot configureBot function called, charType: ${charType} - characterType: ${rgObject.characterType}`);
+  charType = CharInfo.type.indexOf(rgObject.characterType);
+}
+
+let rg = null;
+
+let CURRENT_ABILITY = 0;
+
+let lastEnemyId = -1;
+
+export async function runTurn(rgObject) {
+
+  rg = rgObject;
+
+  if (rg.getState().sceneName === "BossRoom") {
+
+    // select 1 ability per update
+    await selectAbility();
+
+    // TODO: Add script sensors to the door and button so that a bot can walk to a button if door not open
+  }
 }
 
 /**
- * One of ...
- * MANAGED - Server disconnects/ends bot on match/game-scene teardown
- * PERSISTENT - Bot is responsible for disconnecting / ending itself
+ * Selects an ability for this character, and queues that action.
  */
-export function getBotLifecycle() {
-return 'PERSISTENT';
-}
+async function selectAbility() {
 
-/**
- * @returns {boolean} true if I'm an in-game character, or false if I'm an invisible navigator/observer/etc.
- */
-export function isSpawnable() {
-    return true;
-}
+  // Select an ability
+  const abilities = CharInfo.abilities[charType];
+  const abilityIndex = CURRENT_ABILITY % abilities.length;
+  const ability = abilities[abilityIndex];
 
-export function isComplete() {
-    return rg ? rg.isComplete() : false;
-}
+  if(!rg.entityHasAttribute(rg.getBot(), ["isOnCooldown", `ability${ability + 1}Available`], true)) {
+    return;
+  }
 
-export async function configureBot(rgObject) {
-    rg = rgObject;
-    rg.automatedTestMode = true;
+  const targetType = CharInfo.abilityTargets[charType][abilityIndex]
+  let currentTarget;
 
-    // validate that we're in the game
-    await rg.waitForScene("BossRoom");
-
-    // find the closest human player and use a heal ability on them
-    let target = await rg.findNearestEntity("HumanPlayer");
-    await rg.entityExists(target);
-
-    let skillId = CharInfo.abilities[charType][1]
-    rg.performAction("PerformSkill", {
-        skillId: skillId,
-        targetId: target.id,
-        xPosition: target.position.x,
-        yPosition: target.position.y,
-        zPosition: target.position.z
-    })
-
-    // validate that the heal recovers from cooldown
-    await rg.entityHasAttribute(rg.getBot(), ["isOnCooldown", `ability${skillId}Available`], true); 
-
-
-    // find the closest enemy and use the basic attack until it dies
-    // measure from the position of a known imp, 
-    // so the character doesn't try to attack through a wall
-    target = await rg.findNearestEntity("Imp", { x: -3.95, y: 0.0, z: -15.5 });
-    await rg.entityExists(target);
-    await rg.entityHasAttribute(target, "health", 15);
-
-    // approach the entity
-    rg.performAction("FollowObject", {
-        targetId: target.id,
-        range: 5,
-    });
-
-    // validate that it is within certain range
-    // rg.distanceLessThan(rg.getBot(), target, 6);
-
-    // queue three attacks
-    // each one should do 5 damage
-    skillId = CharInfo.abilities[charType][0];
-    const args = {
-        skillId: skillId,
-        targetId: target.id,
-        xPosition: target.position.x,
-        yPosition: target.position.y,
-        zPosition: target.position.z
+  if(targetType === -1) 
+  {
+    currentTarget = null;
+  } 
+  else if (targetType === 1) {
+    // The ability requires an enemy.
+    // Select the most recently referenced enemy or the nearest enemy.
+    const randomEnemy = await rg.findNearestEntity(null, null, (entity) => { return entity.team === 1 && !entity.broken } )
+    if (randomEnemy) {
+      currentTarget = randomEnemy;
+      lastEnemyId = randomEnemy.id;
+    } else {
+      lastEnemyId = -1;
+      return;
     }
-    rg.performAction("PerformSkill", args)
-    await rg.entityHasAttribute(target, "health", 10);
+  } else {
+    // Otherwise, this ability requires an ally - select the closest one
+    const ally = await rg.findNearestEntity(null, null, (entity) => { return entity.team === 0 });
+  }
+  
+  rg.performAction("PerformSkill", {
+    skillId: ability,
+    targetId: currentTarget?.id,
+    xPosition: currentTarget?.position?.x,
+    yPosition: currentTarget?.position?.y,
+    zPosition: currentTarget?.position?.z
+  });
 
-    rg.performAction("PerformSkill", args)
-    await rg.entityHasAttribute(target, "health", 5);
+  CURRENT_ABILITY++;
 
-    rg.performAction("PerformSkill", args)
-    await rg.entityDoesNotExist(target);
-
-    rg.complete();
 }
