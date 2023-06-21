@@ -60,6 +60,7 @@ export async function configureBot(rgObject) {
     // so the character doesn't try to attack through a wall
     target = await rg.findNearestEntity("Imp", { x: -3.95, y: 0.0, z: -15.5 });
     await rg.entityExists(target);
+    await rg.entityHasAttribute(target, "health", 10);
 
     // approach the entity
     rg.performAction("FollowObject", {
@@ -81,10 +82,10 @@ export async function configureBot(rgObject) {
         zPosition: target.position.z
     }
     rg.performAction("PerformSkill", args)
-    await rg.entityHasAttribute(target, "health", originalEnemyHealth - 10);
+    await rg.entityHasAttribute(target, "health", 10);
 
     rg.performAction("PerformSkill", args)
-    await rg.entityHasAttribute(target, "health", originalEnemyHealth - 5);
+    await rg.entityHasAttribute(target, "health", 5);
 
     rg.performAction("PerformSkill", args)
     await rg.entityDoesNotExist(target);
