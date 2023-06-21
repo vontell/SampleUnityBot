@@ -72,10 +72,10 @@ async function selectAbility() {
 
   rg.performAction("PerformSkill", {
     skillId: ability,
-    targetId: targetId,
-    xPosition: position?.x,
-    yPosition: position?.y,
-    zPosition: position?.z
+    targetId: currentTarget?.id,
+    xPosition: currentTarget?.position?.x,
+    yPosition: currentTarget?.position?.y,
+    zPosition: currentTarget?.position?.z
 });
 
 //   BossRoomBot.startAbility(ability, currentTarget?.position, currentTarget?.id, rg);
