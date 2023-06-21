@@ -33,7 +33,9 @@ export async function configureBot(rg) {
 
 
     // find the closest enemy and use the basic attack until it dies
-    target = await rg.findNearestEntity("Imp");
+    // measure from the position of a known imp, 
+    // so the character doesn't try to attack through a wall
+    target = await rg.findNearestEntity("Imp", { x: -0.9, y: -100.0, z: 30.0 });
     await rg.entityExists(target);
 
     skillId = CharInfo.abilities[charType][0];
