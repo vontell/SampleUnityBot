@@ -52,7 +52,7 @@ export async function runTurn(rg) {
   }
 
   // Otherwise, attack a nearby enemy if there is one
-  const enemy = await rg.findNearbyEntity(null, currentPosition, (entity) => { return entity.team === 1 && !entity.broken});
+  const enemy = await rg.findNearestEntity(null, currentPosition, (entity) => { return entity.team === 1 && !entity.broken});
   if(enemy) {
     rg.performAction("PerformSkill", {
       skillId: 1,
