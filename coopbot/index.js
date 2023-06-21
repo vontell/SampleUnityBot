@@ -30,7 +30,7 @@ export async function runTurn(rg) {
 
   // if the bot is standing on a switch, then do nothing
   const floorSwitch = await rg.findEntity("FloorSwitch");
-  if(floorSwitch && floorSwitch.isOn) return;
+  if(floorSwitch && await rg.entityHasAttribute(floorSwitch, "isOn", true)) return;
 
   // if the switch is within range of 30 units from the bot, then move onto it
   if(floorSwitch && rg.MathFunctions.distanceSq(currentPosition, floorSwitch.position) < 30) {
