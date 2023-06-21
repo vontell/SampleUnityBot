@@ -57,7 +57,7 @@ async function selectAbility() {
   else if (targetType === 1) {
     // The ability requires an enemy.
     // Select the most recently referenced enemy or the nearest enemy.
-    const randomEnemy = rg.findNearestEntity(null, null, (entity) => { return entity.team === 1 && !entity.broken } )
+    const randomEnemy = await rg.findNearestEntity(null, null, (entity) => { return entity.team === 1 && !entity.broken } )
     console.log(JSON.stringify(randomEnemy))
     
     if (randomEnemy) {
