@@ -11,8 +11,24 @@ export function getCharacterType() {
     return CharInfo.type[charType]; 
 }
 
+/**
+ * One of ...
+ * MANAGED - Server disconnects/ends bot on match/game-scene teardown
+ * PERSISTENT - Bot is responsible for disconnecting / ending itself
+ */
+export function getBotLifecycle() {
+return 'PERSISTENT';
+}
+
+/**
+ * @returns {boolean} true if I'm an in-game character, or false if I'm an invisible navigator/observer/etc.
+ */
+export function isSpawnable() {
+    return true;
+}
+
 export function isComplete() {
-    return rg ? rg.isComplete : false;
+    return rg ? rg.isComplete() : false;
 }
 
 export async function configureBot(rgObject) {
