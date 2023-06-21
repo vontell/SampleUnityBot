@@ -43,7 +43,7 @@ export async function runTurn(rg) {
 
   // if the bot is not near the human player, then move within range of that player
   const humanPlayer = await rg.findEntity("HumanPlayer");
-  if(humanPlayer && rg.MathFunctions.distanceSq(currentPosition, humanPlayer.position) > 7 ) {
+  if(humanPlayer && rg.MathFunctions.distanceSq(currentPosition, humanPlayer.position) > 10 ) {
     rg.performAction("FollowObject", {
       targetId: humanPlayer.id,
       range: 2
@@ -53,7 +53,7 @@ export async function runTurn(rg) {
 
   // Otherwise, attack a nearby enemy if there is one
   const enemy = await rg.findNearestEntity(null, currentPosition, (entity) => { return entity.team === 1 && !entity.broken});
-  if(enemy) {
+  if(enemy && enemy.health > 0) {
     rg.performAction("PerformSkill", {
       skillId: 1,
       targetId: enemy.id,
