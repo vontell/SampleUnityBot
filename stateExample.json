@@ -1,0 +1,722 @@
+{
+    "tick": 1050,
+    "sceneName": "BossRoom",
+    "gameState": {
+        "-8059884": {
+            "id": -8059884,
+            "type": "BotPlayer",
+            "isStatic": false,
+            "position": {
+                "x": 7,
+                "y": 0.0003771782,
+                "z": 4,
+                "normalized": {
+                    "x": 0.868243158,
+                    "y": 0.000046783196,
+                    "z": 0.49613893,
+                    "magnitude": 1,
+                    "sqrMagnitude": 1
+                },
+                "magnitude": 8.062258,
+                "sqrMagnitude": 65
+            },
+            "rotation": {
+                "x": 0,
+                "y": 1,
+                "z": 0,
+                "w": 0,
+                "eulerAngles": {
+                    "x": 0,
+                    "y": 180,
+                    "z": 0,
+                    "normalized": {
+                        "x": 0,
+                        "y": 1,
+                        "z": 0,
+                        "magnitude": 1,
+                        "sqrMagnitude": 1
+                    },
+                    "magnitude": 180,
+                    "sqrMagnitude": 32400
+                }
+            },
+            "characterType": "Mage",
+            "health": 800,
+            "team": 0,
+            "isOnCooldown": {
+                "ability1Available": true,
+                "ability2Available": true
+            }
+        },
+        "-8059098": {
+            "id": -8059098,
+            "type": "Imp",
+            "isStatic": false,
+            "position": {
+                "x": 42.15,
+                "y": 0.0003771782,
+                "z": -4.16,
+                "normalized": {
+                    "x": 0.995164931,
+                    "y": 0.000008905207,
+                    "z": -0.0982179344,
+                    "magnitude": 1,
+                    "sqrMagnitude": 1
+                },
+                "magnitude": 42.35479,
+                "sqrMagnitude": 1793.92822
+            },
+            "rotation": {
+                "x": 0,
+                "y": -0.950464368,
+                "z": 0,
+                "w": 0.310833573,
+                "eulerAngles": {
+                    "x": 0,
+                    "y": 216.218948,
+                    "z": 0,
+                    "normalized": {
+                        "x": 0,
+                        "y": 1,
+                        "z": 0,
+                        "magnitude": 1,
+                        "sqrMagnitude": 1
+                    },
+                    "magnitude": 216.218948,
+                    "sqrMagnitude": 46750.6328
+                }
+            },
+            "characterType": "Imp",
+            "health": 15,
+            "team": 1,
+            "isOnCooldown": {
+                "ability1Available": true
+            }
+        },
+        "-8058806": {
+            "id": -8058806,
+            "type": "Imp",
+            "isStatic": false,
+            "position": {
+                "x": 18.14,
+                "y": 0.0003771782,
+                "z": -23.81,
+                "normalized": {
+                    "x": 0.6060231,
+                    "y": 0.0000126008108,
+                    "z": -0.795447052,
+                    "magnitude": 1,
+                    "sqrMagnitude": 1
+                },
+                "magnitude": 29.9328518,
+                "sqrMagnitude": 895.975647
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0.7071068,
+                "z": 0,
+                "w": -0.7071068,
+                "eulerAngles": {
+                    "x": 0,
+                    "y": 270,
+                    "z": 0,
+                    "normalized": {
+                        "x": 0,
+                        "y": 1,
+                        "z": 0,
+                        "magnitude": 1,
+                        "sqrMagnitude": 1
+                    },
+                    "magnitude": 270,
+                    "sqrMagnitude": 72900
+                }
+            },
+            "characterType": "Imp",
+            "health": 15,
+            "team": 1,
+            "isOnCooldown": {
+                "ability1Available": true
+            }
+        },
+        "-8058514": {
+            "id": -8058514,
+            "type": "Imp",
+            "isStatic": false,
+            "position": {
+                "x": -10.6400146,
+                "y": 0.0003771782,
+                "z": -22.54,
+                "normalized": {
+                    "x": -0.4268792,
+                    "y": 0.000015132453,
+                    "z": -0.9043086,
+                    "normalized": {
+                        "x": -0.426879227,
+                        "y": 0.0000151324539,
+                        "z": -0.9043087,
+                        "magnitude": 1,
+                        "sqrMagnitude": 1
+                    },
+                    "magnitude": 0.99999994,
+                    "sqrMagnitude": 0.9999999
+                },
+                "magnitude": 24.92512,
+                "sqrMagnitude": 621.261536
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1,
+                "eulerAngles": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "magnitude": 0,
+                    "sqrMagnitude": 0
+                }
+            },
+            "characterType": "Imp",
+            "health": 15,
+            "team": 1,
+            "isOnCooldown": {
+                "ability1Available": true
+            }
+        },
+        "-8058222": {
+            "id": -8058222,
+            "type": "Imp",
+            "isStatic": false,
+            "position": {
+                "x": 7.159973,
+                "y": 0.0003771782,
+                "z": -23.73,
+                "normalized": {
+                    "x": 0.288864076,
+                    "y": 0.0000152169887,
+                    "z": -0.9573701,
+                    "normalized": {
+                        "x": 0.2888641,
+                        "y": 0.00001521699,
+                        "z": -0.957370162,
+                        "magnitude": 1,
+                        "sqrMagnitude": 1.00000012
+                    },
+                    "magnitude": 0.99999994,
+                    "sqrMagnitude": 0.99999994
+                },
+                "magnitude": 24.7866516,
+                "sqrMagnitude": 614.378052
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1,
+                "eulerAngles": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "magnitude": 0,
+                    "sqrMagnitude": 0
+                }
+            },
+            "characterType": "Imp",
+            "health": 15,
+            "team": 1,
+            "isOnCooldown": {
+                "ability1Available": true
+            }
+        },
+        "-8057930": {
+            "id": -8057930,
+            "type": "Imp",
+            "isStatic": false,
+            "position": {
+                "x": 23.01,
+                "y": 0.0003771782,
+                "z": -30.95,
+                "normalized": {
+                    "x": 0.596634269,
+                    "y": 0.000009779984,
+                    "z": -0.802513242,
+                    "magnitude": 1,
+                    "sqrMagnitude": 1
+                },
+                "magnitude": 38.56634,
+                "sqrMagnitude": 1487.36255
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0.4368655,
+                "z": 0,
+                "w": -0.899526834,
+                "eulerAngles": {
+                    "x": 0,
+                    "y": 308.1919,
+                    "z": 0,
+                    "normalized": {
+                        "x": 0,
+                        "y": 1,
+                        "z": 0,
+                        "magnitude": 1,
+                        "sqrMagnitude": 1
+                    },
+                    "magnitude": 308.1919,
+                    "sqrMagnitude": 94982.24
+                }
+            },
+            "characterType": "Imp",
+            "health": 15,
+            "team": 1,
+            "isOnCooldown": {
+                "ability1Available": true
+            }
+        },
+        "-8057638": {
+            "id": -8057638,
+            "type": "Imp",
+            "isStatic": false,
+            "position": {
+                "x": 38.53,
+                "y": 0.0003771782,
+                "z": 2.2,
+                "normalized": {
+                    "x": 0.9983739,
+                    "y": 0.00000977329,
+                    "z": 0.05700552,
+                    "magnitude": 1,
+                    "sqrMagnitude": 1.00000012
+                },
+                "magnitude": 38.5927544,
+                "sqrMagnitude": 1489.40076
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0.994777441,
+                "z": 0,
+                "w": -0.10206794,
+                "eulerAngles": {
+                    "x": 0,
+                    "y": 191.716522,
+                    "z": 0,
+                    "normalized": {
+                        "x": 0,
+                        "y": 1,
+                        "z": 0,
+                        "magnitude": 1,
+                        "sqrMagnitude": 1
+                    },
+                    "magnitude": 191.716522,
+                    "sqrMagnitude": 36755.2266
+                }
+            },
+            "characterType": "Imp",
+            "health": 15,
+            "team": 1,
+            "isOnCooldown": {
+                "ability1Available": true
+            }
+        },
+        "-8057346": {
+            "id": -8057346,
+            "type": "Imp",
+            "isStatic": false,
+            "position": {
+                "x": 46.46997,
+                "y": 0.0003771782,
+                "z": -20.5999985,
+                "normalized": {
+                    "x": 0.9142004,
+                    "y": 0.0000074202,
+                    "z": -0.4052623,
+                    "magnitude": 1,
+                    "sqrMagnitude": 1
+                },
+                "magnitude": 50.8312721,
+                "sqrMagnitude": 2583.818
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1,
+                "eulerAngles": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "magnitude": 0,
+                    "sqrMagnitude": 0
+                }
+            },
+            "characterType": "Imp",
+            "health": 15,
+            "team": 1,
+            "isOnCooldown": {
+                "ability1Available": true
+            }
+        },
+        "-8057054": {
+            "id": -8057054,
+            "type": "Imp",
+            "isStatic": false,
+            "position": {
+                "x": -0.289978027,
+                "y": 0.0003771782,
+                "z": -27.82,
+                "normalized": {
+                    "x": -0.0104227988,
+                    "y": 0.00001355707,
+                    "z": -0.999945641,
+                    "normalized": {
+                        "x": -0.0104228,
+                        "y": 0.0000135570708,
+                        "z": -0.9999457,
+                        "magnitude": 1,
+                        "sqrMagnitude": 1
+                    },
+                    "magnitude": 0.99999994,
+                    "sqrMagnitude": 0.99999994
+                },
+                "magnitude": 27.8215122,
+                "sqrMagnitude": 774.0365
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1,
+                "eulerAngles": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "magnitude": 0,
+                    "sqrMagnitude": 0
+                }
+            },
+            "characterType": "Imp",
+            "health": 15,
+            "team": 1,
+            "isOnCooldown": {
+                "ability1Available": true
+            }
+        },
+        "-8056762": {
+            "id": -8056762,
+            "type": "Imp",
+            "isStatic": false,
+            "position": {
+                "x": 20.1699829,
+                "y": 0.0003771782,
+                "z": -15.7099991,
+                "normalized": {
+                    "x": 0.788930535,
+                    "y": 0.0000147529818,
+                    "z": -0.614482343,
+                    "normalized": {
+                        "x": 0.7889306,
+                        "y": 0.0000147529827,
+                        "z": -0.6144824,
+                        "magnitude": 1,
+                        "sqrMagnitude": 1.00000012
+                    },
+                    "magnitude": 0.99999994,
+                    "sqrMagnitude": 0.9999999
+                },
+                "magnitude": 25.5662346,
+                "sqrMagnitude": 653.6323
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0.856640756,
+                "z": 0,
+                "w": 0.5159135,
+                "eulerAngles": {
+                    "x": 0,
+                    "y": 117.882935,
+                    "z": 0,
+                    "normalized": {
+                        "x": 0,
+                        "y": 1,
+                        "z": 0,
+                        "magnitude": 1,
+                        "sqrMagnitude": 1
+                    },
+                    "magnitude": 117.882935,
+                    "sqrMagnitude": 13896.3867
+                }
+            },
+            "characterType": "Imp",
+            "health": 15,
+            "team": 1,
+            "isOnCooldown": {
+                "ability1Available": true
+            }
+        },
+        "-8056470": {
+            "id": -8056470,
+            "type": "Imp",
+            "isStatic": false,
+            "position": {
+                "x": 33.5599976,
+                "y": 0.0003771782,
+                "z": 6.880001,
+                "normalized": {
+                    "x": 0.979626238,
+                    "y": 0.0000110099427,
+                    "z": 0.200829268,
+                    "normalized": {
+                        "x": 0.9796263,
+                        "y": 0.0000110099436,
+                        "z": 0.200829282,
+                        "magnitude": 1,
+                        "sqrMagnitude": 1.00000012
+                    },
+                    "magnitude": 0.99999994,
+                    "sqrMagnitude": 0.99999994
+                },
+                "magnitude": 34.25796,
+                "sqrMagnitude": 1173.60791
+            },
+            "rotation": {
+                "x": 0,
+                "y": 1,
+                "z": 0,
+                "w": 0,
+                "eulerAngles": {
+                    "x": 0,
+                    "y": 180,
+                    "z": 0,
+                    "normalized": {
+                        "x": 0,
+                        "y": 1,
+                        "z": 0,
+                        "magnitude": 1,
+                        "sqrMagnitude": 1
+                    },
+                    "magnitude": 180,
+                    "sqrMagnitude": 32400
+                }
+            },
+            "characterType": "Imp",
+            "health": 15,
+            "team": 1,
+            "isOnCooldown": {
+                "ability1Available": true
+            }
+        },
+        "-8056178": {
+            "id": -8056178,
+            "type": "Imp",
+            "isStatic": false,
+            "position": {
+                "x": -3.949829,
+                "y": 0.0003771782,
+                "z": -15.5037766,
+                "normalized": {
+                    "x": -0.246879637,
+                    "y": 0.0000235751,
+                    "z": -0.9690462,
+                    "magnitude": 1,
+                    "sqrMagnitude": 1
+                },
+                "magnitude": 15.9990072,
+                "sqrMagnitude": 255.968231
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1,
+                "eulerAngles": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "magnitude": 0,
+                    "sqrMagnitude": 0
+                }
+            },
+            "characterType": "Imp",
+            "health": 15,
+            "team": 1,
+            "isOnCooldown": {
+                "ability1Available": true
+            }
+        },
+        "-8055874": {
+            "id": -8055874,
+            "type": "VandalImp",
+            "isStatic": false,
+            "position": {
+                "x": 34.06,
+                "y": 0.0003771782,
+                "z": -6.05,
+                "normalized": {
+                    "x": 0.9845879,
+                    "y": 0.0000109032608,
+                    "z": -0.1748901,
+                    "normalized": {
+                        "x": 0.984587967,
+                        "y": 0.0000109032617,
+                        "z": -0.174890116,
+                        "magnitude": 1,
+                        "sqrMagnitude": 1
+                    },
+                    "magnitude": 0.99999994,
+                    "sqrMagnitude": 0.9999999
+                },
+                "magnitude": 34.5931549,
+                "sqrMagnitude": 1196.68628
+            },
+            "rotation": {
+                "x": 0,
+                "y": 1,
+                "z": 0,
+                "w": 0,
+                "eulerAngles": {
+                    "x": 0,
+                    "y": 180,
+                    "z": 0,
+                    "normalized": {
+                        "x": 0,
+                        "y": 1,
+                        "z": 0,
+                        "magnitude": 1,
+                        "sqrMagnitude": 1
+                    },
+                    "magnitude": 180,
+                    "sqrMagnitude": 32400
+                }
+            },
+            "characterType": "VandalImp",
+            "health": 100,
+            "team": 1,
+            "isOnCooldown": {
+                "ability1Available": true
+            }
+        },
+        "-8055510": {
+            "id": -8055510,
+            "type": "Crystal",
+            "isStatic": true,
+            "position": {
+                "x": 35.784,
+                "y": 0.302151442,
+                "z": -23.008,
+                "normalized": {
+                    "x": 0.8411145,
+                    "y": 0.0071021677,
+                    "z": -0.540810466,
+                    "magnitude": 1,
+                    "sqrMagnitude": 1
+                },
+                "magnitude": 42.5435524,
+                "sqrMagnitude": 1809.954
+            },
+            "broken": {
+                "OnValueChanged": {
+                    "Method": {
+                        "Name": "OnBreakableBroken",
+                        "AssemblyName": "Unity.BossRoom.Gameplay, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                        "ClassName": "Unity.BossRoom.Gameplay.GameplayObjects.EnemyPortal",
+                        "Signature": "Void OnBreakableBroken(Boolean, Boolean)",
+                        "Signature2": "System.Void OnBreakableBroken(System.Boolean, System.Boolean)",
+                        "MemberType": 8,
+                        "GenericArguments": null
+                    },
+                    "Target": null
+                },
+                "ReadPerm": 0,
+                "WritePerm": 0,
+                "Value": false,
+                "Name": "IsBroken"
+            },
+            "team": 1
+        },
+        "-8055458": {
+            "id": -8055458,
+            "type": "Crystal",
+            "isStatic": true,
+            "position": {
+                "x": 41.738,
+                "y": 0,
+                "z": -16.973999,
+                "normalized": {
+                    "x": 0.9263277,
+                    "y": 0,
+                    "z": -0.37671873,
+                    "magnitude": 1,
+                    "sqrMagnitude": 1
+                },
+                "magnitude": 45.0574875,
+                "sqrMagnitude": 2030.17725
+            },
+            "broken": {
+                "OnValueChanged": {
+                    "Method": {
+                        "Name": "OnBreakableBroken",
+                        "AssemblyName": "Unity.BossRoom.Gameplay, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                        "ClassName": "Unity.BossRoom.Gameplay.GameplayObjects.EnemyPortal",
+                        "Signature": "Void OnBreakableBroken(Boolean, Boolean)",
+                        "Signature2": "System.Void OnBreakableBroken(System.Boolean, System.Boolean)",
+                        "MemberType": 8,
+                        "GenericArguments": null
+                    },
+                    "Target": null
+                },
+                "ReadPerm": 0,
+                "WritePerm": 0,
+                "Value": false,
+                "Name": "IsBroken"
+            },
+            "team": 1
+        },
+        "-8051660": {
+            "id": -8051660,
+            "type": "HumanPlayer",
+            "isStatic": false,
+            "position": {
+                "x": 5,
+                "y": 0.0003771782,
+                "z": 2,
+                "normalized": {
+                    "x": 0.9284767,
+                    "y": 0.00007004023,
+                    "z": 0.371390671,
+                    "magnitude": 1,
+                    "sqrMagnitude": 1
+                },
+                "magnitude": 5.38516474,
+                "sqrMagnitude": 29
+            },
+            "rotation": {
+                "x": 0,
+                "y": 1,
+                "z": 0,
+                "w": 0,
+                "eulerAngles": {
+                    "x": 0,
+                    "y": 180,
+                    "z": 0,
+                    "normalized": {
+                        "x": 0,
+                        "y": 1,
+                        "z": 0,
+                        "magnitude": 1,
+                        "sqrMagnitude": 1
+                    },
+                    "magnitude": 180,
+                    "sqrMagnitude": 32400
+                }
+            },
+            "characterType": "Archer",
+            "health": 900,
+            "team": 0,
+            "isOnCooldown": {
+                "ability1Available": true,
+                "ability2Available": true,
+                "ability3Available": true
+            }
+        }
+    }
+}

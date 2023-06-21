@@ -3,6 +3,13 @@ import {MathFunctions} from "../rg";
 
 let charType = 3; // Archer
 
+/**
+ * Defines the type of character that the game should use for this bot (in this case an Archer)
+ */
+export function getCharacterType() {
+  return CharInfo.type[charType];
+}
+
 export function configureBot(characterType) {
   console.log(`Unity bot configureBot function called, charType: ${charType} - characterType: ${characterType}`);
   charType = CharInfo.type.indexOf(characterType);
@@ -15,42 +22,45 @@ export function configureBot(characterType) {
  *  - If an enemy is within a certain distance of a player, attack that enemy
  *  - If the switch is within a range of 30 units from the bot, move onto the switch
  */
-export async function runTurn(playerId, tickInfo, mostRecentMatchInfo, actionQueue) {
+export async function runTurn(rg) {
 
+  if(rg.getState().sceneName !== "BossRoom") return;
 
-  if ("BossRoom" == tickInfo.sceneName) {
+  const currentPosition = rg.getBot().position;
 
-    // First, get all the information needed to perform the various checks
-    const myState = BossRoomBot.getAlly(tickInfo, playerId);
-    const doorSwitchState = BossRoomBot.getDoorSwitch(tickInfo);
+  // if the bot is standing on a switch, then do nothing
+  const floorSwitch = await rg.findEntity("FloorSwitch");
+  if(floorSwitch && floorSwitch.isOn) return;
 
-    // If the bot is standing on the switch, do nothing
-    if (doorSwitchState && doorSwitchState.isOn) return;
-
-    // If the switch is within a range of 30 units from the bot, move onto the switch
-    if (doorSwitchState && MathFunctions.distanceSq(myState.position, doorSwitchState.position) < 30) {
-      BossRoomBot.followObject(doorSwitchState, 0.1, actionQueue);
-      return;
-    }
-
-    // If the bot is not near the player, move within range of the player
-    const humanPlayer = BossRoomBot.getHumans(tickInfo)[0];
-    if (humanPlayer && MathFunctions.distanceSq(humanPlayer.position, myState.position) > 7) {
-      BossRoomBot.followObject(humanPlayer, 2, actionQueue);
-      return;
-    }
-
-    // Otherwise, attack nearby enemies, if there is one
-    const nearbyEnemy = BossRoomBot.nearestEnemy(tickInfo, myState.position);
-    if (nearbyEnemy) {
-      BossRoomBot.startAbility(1, nearbyEnemy.position, nearbyEnemy.id, actionQueue);
-    }
+  // if the switch is within range of 30 units from the bot, then move onto it
+  if(floorSwitch && rg.MathFunctions.distanceSq(currentPosition, floorSwitch.position) < 30) {
+    rg.performAction("FollowObject", {
+      targetId: floorSwitch.id,
+      range: 0.1
+    });
+    return;
   }
-}
 
-/**
- * Defines the type of character that the game should use for this bot (in this case an Archer)
- */
-export function getCharacterType() {
-  return CharInfo.type[charType];
+  // if the bot is not near the human player, then move within range of that player
+  const humanPlayer = await rg.findEntity("HumanPlayer");
+  if(humanPlayer && rg.MathFunctions.distanceSq(currentPosition, humanPlayer.position) > 7 ) {
+    rg.performAction("FollowObject", {
+      targetId: humanPlayer.id,
+      range: 2
+    });
+    return;
+  }
+
+  // Otherwise, attack a nearby enemy if there is one
+  const enemy = await rg.findNearbyEntity(null, currentPosition, (entity) => { return entity.team === 1 && !entity.broken});
+  if(enemy) {
+    rg.performAction("PerformSkill", {
+      skillId: 1,
+      targetId: enemy.id,
+      xPosition: enemy.position.x,
+      yPosition: enemy.position.y,
+      zPosition: enemy.position.z
+    });
+  }
+
 }
