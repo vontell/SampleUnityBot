@@ -46,11 +46,9 @@ let stateFlags = {
 
 let playedGame = false;
 
-export async function configureBot(rgObject) {
-  rg = rgObject;
-}
-
 export async function runTurn(rgObject) {
+
+  rg = rgObject;
 
   switch (rg.getState().sceneName) {
     case "MainMenu":
