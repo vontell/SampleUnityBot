@@ -69,16 +69,15 @@ async function selectAbility() {
     // Otherwise, this ability requires an ally - select the closest one
     const ally = await rg.findNearestEntity(null, null, (entity) => { return entity.team === 0 });
   }
-
+  
   rg.performAction("PerformSkill", {
     skillId: ability,
     targetId: currentTarget?.id,
     xPosition: currentTarget?.position?.x,
     yPosition: currentTarget?.position?.y,
     zPosition: currentTarget?.position?.z
-});
+  });
 
-//   BossRoomBot.startAbility(ability, currentTarget?.position, currentTarget?.id, rg);
   CURRENT_ABILITY++;
 
 }
