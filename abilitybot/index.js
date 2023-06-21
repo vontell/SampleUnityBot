@@ -58,8 +58,6 @@ async function selectAbility() {
     // The ability requires an enemy.
     // Select the most recently referenced enemy or the nearest enemy.
     const randomEnemy = await rg.findNearestEntity(null, null, (entity) => { return entity.team === 1 && !entity.broken } )
-    console.log(JSON.stringify(randomEnemy))
-    
     if (randomEnemy) {
       currentTarget = randomEnemy;
       lastEnemyId = randomEnemy.id;
@@ -68,12 +66,19 @@ async function selectAbility() {
       return;
     }
   } else {
-    // Otherwise, this ability requires an ally - select a random one.
-    const allies = BossRoomBot.getAllies(rg);
-    currentTarget = allies[Math.floor(Math.random() * allies.length)];
+    // Otherwise, this ability requires an ally - select the closest one
+    const ally = await rg.findNearestEntity(null, null, (entity) => { return entity.team === 0 });
   }
 
-  BossRoomBot.startAbility(ability, currentTarget?.position, currentTarget?.id, rg);
+  rg.performAction("PerformSkill", {
+    skillId: ability,
+    targetId: targetId,
+    xPosition: position?.x,
+    yPosition: position?.y,
+    zPosition: position?.z
+});
+
+//   BossRoomBot.startAbility(ability, currentTarget?.position, currentTarget?.id, rg);
   CURRENT_ABILITY++;
 
 }
