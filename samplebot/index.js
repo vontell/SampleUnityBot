@@ -15,6 +15,11 @@ let rg = null;
 export async function runTurn(rgObject) {
 
   console.log("inside run turn")
-  console.log(rgObject.findEntities("PowerUp"))
+
+  let powerUps = rgObject.findEntities("PowerUp")
+  if (powerUps) {
+    console.log(powerUps[0].position)
+    rgObject.performAction("MoveToPosition", powerUps[0].position)
+  }
 
 }
