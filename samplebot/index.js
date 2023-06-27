@@ -16,6 +16,6 @@ export async function runTurn(rgObject) {
 
   console.log("inside run turn")
   rg = rgObject;
-  console.log(rg.getState())
+  console.log(rg)
 
 }
