@@ -12,10 +12,9 @@ export function configureBot(rgObject) {
 
 let rg = null;
 
-export async function runTurn(rgObject) {
+export async function runTurn(playerId, tickInfo, mostRecentMatchInfo, actionQueue) {
 
   console.log("inside run turn")
-  rg = rgObject;
-  console.log(rg)
+  console.log(tickInfo)
 
 }
