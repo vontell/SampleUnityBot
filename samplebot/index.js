@@ -3,7 +3,7 @@
  */
  export function getCharacterConfig() {
   return {
-      "speed": "7000"
+      "speed": "2000"
   };
 }
 
