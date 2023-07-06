@@ -5,8 +5,10 @@ let charType = Math.round(Math.random() * 1000000) % 4;
 /**
  * Defines the type of character that the game should use for this bot.
  */
- export function getCharacterType() {
-  return CharInfo.type[charType];
+ export function getCharacterConfig() {
+  return {
+    "characterType": CharInfo.type[charType]
+  };
 }
 
 export function configureBot(rgObject) {
