@@ -12,8 +12,6 @@ export function configureBot(rgObject) {
   console.log(rgObject)
 }
 
-let rg = null;
-
 export async function runTurn(rgObject) {
 
   console.log("inside run turn")
