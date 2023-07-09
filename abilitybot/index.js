@@ -12,9 +12,11 @@ let charType = Math.round(Math.random() * 1000000) % 4;
 }
 
 export function configureBot(rgObject) {
-   console.log(rgObject);
-   console.log(`Unity bot configureBot function called, charType: ${charType} - characterType: ${rgObject.characterType}`);
-   charType = CharInfo.type.indexOf(rgObject.characterType);
+   const characterType = JSON.parse(rgObject.characterConfig).characterType;
+   if (characterType) {
+     console.log(`Unity bot configureBot function called, charType: ${charType} - characterType: ${rgObject.characterType}`);
+     charType = CharInfo.type.indexOf(rgObject.characterType);
+   }
 }
 
 let rg = null;
